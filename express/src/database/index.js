@@ -38,19 +38,20 @@ db.sync = async () => {
     // So if tables are created and more tables are added then have to use force: true so it can add the new tables, as it will first drop all tables and then create them. Only required when model is updated and things in the table is changed.
 
     // Runs this function asyncornous to the above one, so this only runs once above one is completed.
-    await seedData();
+    await addData();
 };
 
-async function seedData() {
+async function addData() {
     // Variable Constant Declared = Counts the users tables data.
-    const count = await db.users.count();
+    const userCount = await db.users.count();
 
     // Only seed data if necessary.
     // Checks if there are no users in the database users table and then runs the bottom code otherwise this function is returned if data already exists in users table in DB.
-    if (count > 0)
+    if (userCount > 0)
         return;
 
     // Creates and argon2 instance for password hashing.
+    // argon2 is a library for hashing.
     const argon2 = require("argon2");
 
     // Sample User data to add into the database user table.
