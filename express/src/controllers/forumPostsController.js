@@ -12,8 +12,8 @@ exports.all = async (req, res) => {
 // Routes are delcared in Routes folder.
 exports.create = async (req, res) => {
   const post = await db.forumPosts.create({
-    text: req.body.text,
-    username: req.body.username
+    postText: req.body.postText,
+    email: req.body.email
   });
 
   res.json(post);

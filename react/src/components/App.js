@@ -8,20 +8,37 @@ import Header from './Header';
 import Home from './Home';
 import Footer from './Footer';
 import Signup from './Sign-up';
+import Login from './Login';
+import { getUser, removeUser } from "../data/repository";
 
 function App() {
+
+  const [user, setUser] = useState(getUser());
+
+  const loginUser = (user) => {
+    setUser(user);
+  };
+
+  const logoutUser = () => {
+    removeUser();
+    setUser(null);
+  };
+
   return (
     <div>
       {/* Router is used for routing to different pages */}
       <Router>
         <Header />
-        <Navigation />
+        <Navigation user={user} logoutUser={logoutUser} />
         <Switch>
           <Route path="/Sign-up">
-            <Signup />
+            <Signup loginUser={loginUser}/>
+          </Route>
+          <Route path="/Sign-in">
+            <Login loginUser={loginUser}/>
           </Route>
           <Route path={["/Home", "/"]}>
-            <Home />
+            <Home user={user}/>
           </Route>
         </Switch>
         <Footer />

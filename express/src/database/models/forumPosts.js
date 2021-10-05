@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) =>
             primaryKey: true
         },
         // Defining Posts field in the table with properties of SQL.
-        text: {
+        postText: {
             type: DataTypes.STRING(600),
             allowNull: false
         }

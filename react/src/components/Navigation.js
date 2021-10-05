@@ -24,7 +24,7 @@ function Navigation(props) {
             <li className="nav-item">
               <a className="nav-link" href="/Home">Home</a>
             </li>
-            {/* {props.username !== null &&
+            {props.user !== null &&
               <>
                 <li className="nav-item">
                   <a className="nav-link" href="/MyProfile">My Profile</a>
@@ -33,10 +33,10 @@ function Navigation(props) {
                   <a className="nav-link" href="/Forum">Forum</a>
                 </li>
               </>
-            } */}
+            }
           </ul>
           <ul className="navbar-nav">
-            {/* {props.username === null ? */}
+            {props.user === null ?
               <div className="form-inline my-2 my-lg-0">
                 <a href="/Sign-up">
                   <button className="btn btn-outline-success mr-sm-2" type="submit">Sign-up</button>
@@ -45,18 +45,18 @@ function Navigation(props) {
                   <button className="btn btn-warning my-2 my-sm-0" type="submit">Sign-in</button>
                 </a>
               </div>
-            {/* //   :
-            //   <>
-            //     <li className="nav-item">
-            //       <span className="nav-link" style={{color: "Black"}}>Welcome, {props.username}</span>
-            //     </li>
-            //     <div className="form-inline my-2 my-lg-0">
-            //       <a href="/Sign-in" onClick={props.logoutUser}>
-            //         <button className="btn btn-warning my-2 my-sm-0" type="submit">Logout</button>
-            //       </a>
-            //     </div>
-            //   </>
-            // } */}
+              :
+              <>
+                <li className="nav-item">
+                  <span className="nav-link" style={{color: "Black"}}>Welcome, {props.user.username}</span>
+                </li>
+                <div className="form-inline my-2 my-lg-0">
+                  <a href="/Sign-in" onClick={props.logoutUser}>
+                    <button className="btn btn-warning my-2 my-sm-0" type="submit">Logout</button>
+                  </a>
+                </div>
+              </>
+            }
           </ul>
         </div>
       </div>

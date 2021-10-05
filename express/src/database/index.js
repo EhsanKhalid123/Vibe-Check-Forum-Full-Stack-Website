@@ -25,13 +25,13 @@ db.forumPosts = require("./models/forumPosts.js")(db.sequelize, DataTypes);
 
 // Relate post and user through foreign key.
 // Relating Posts table to the Users table with a foreign key.
-db.forumPosts.belongsTo(db.users, { foreignKey: { name: "username", allowNull: false } });
+db.forumPosts.belongsTo(db.users, { foreignKey: { name: "email", allowNull: false } });
 
 // Include a sync option with seed data logic included.
 db.sync = async () => {
     // Sync schema.
     // Creates the tables defined in Models if not created
-    await db.sequelize.sync();
+    await db.sequelize.sync({});
 
     // Can sync with force if the schema has become out of date - note that syncing with force is a destructive operation.
     // await db.sequelize.sync({ force: true }); <-- This will delete all tables and recreate them So if more tables are added then the current command inuse wont do anything because that only works if no tables are created.
@@ -56,9 +56,9 @@ async function addData() {
 
     // Sample User data to add into the database user table.
     let hashedPassword = await argon2.hash("abc123", { type: argon2.argon2id });
-    await db.users.create({email: "test@test.com", username: "TestAcc", hashed_password: hashedPassword, name: "Test User" });
+    await db.users.create({ email: "test@test.com", username: "TestAcc", hashed_password: hashedPassword, name: "Test User"});
 
-} 
+}
 
 // Exporting db module methods so it can be accessed by other classes/files.
 module.exports = db;
