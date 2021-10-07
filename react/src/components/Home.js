@@ -13,7 +13,7 @@ function Home(props) {
         <div className="text-center">
             <p>&nbsp;</p>
             <h1 className="home-welcome display-4">Welcome to Vibe Check</h1>
-            {props.username !== null && <h4 style={{margin: "0px 10px 10px 10px"}}><strong>Hello {props.username}!</strong></h4>}
+            {props.user !== null && <h4 style={{margin: "0px 10px 10px 10px"}}><strong>Hello {props.user.username}!</strong></h4>}
             <img src={logo} className="home-logo-image" alt="logo" />
             <div>Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
             <hr style={{ width: "90%", borderWidth: "1px", backgroundColor: "#5dc7d8" }} />
