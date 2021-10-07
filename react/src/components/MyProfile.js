@@ -1,6 +1,6 @@
 // Importing React classes and functions from node modules
 import React, { useState } from "react";
-import { deleteAccount, removePost} from "../data/repository";
+import { deleteUserDB, removePost} from "../data/repository";
 
 // Functional Component for MyProfile
 function MyProfile(props) {
@@ -13,7 +13,7 @@ function MyProfile(props) {
     }
 
     const deleteProfile = (event) => {
-        // deleteAccount();
+        deleteUserDB(props.user);
         // removePost();
         togglePopup();
         

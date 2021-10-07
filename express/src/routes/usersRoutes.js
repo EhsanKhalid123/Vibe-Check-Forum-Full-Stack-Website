@@ -11,6 +11,9 @@ module.exports = (express, app) => {
     // Select one user from the database if username and password are a match.
     router.get("/Sign-in", controller.login);
   
+    // Deletes a user from the DB.
+    router.post("/delete", controller.delete);
+
     // Create a new user.
     router.post("/", controller.create);
   

@@ -28,6 +28,12 @@ async function createUser(user) {
   return response.data;
 }
 
+async function deleteUserDB(user) {
+  const response = await axios.post(API_HOST + "/VCApi/users/delete", user);
+
+  return response.data;
+}
+
 // --- Post ---------------------------------------------------------------------------------------
 async function getPosts() {
   const response = await axios.get(API_HOST + "/VCApi/posts");
@@ -57,5 +63,5 @@ function removeUser() {
 export {
   verifyUser, findUser, createUser,
   getPosts, createPost,
-  getUser, removeUser
+  getUser, removeUser, deleteUserDB
 }
