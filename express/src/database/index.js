@@ -31,7 +31,7 @@ db.forumPosts.belongsTo(db.users, { foreignKey: { name: "email", allowNull: fals
 db.sync = async () => {
     // Sync schema.
     // Creates the tables defined in Models if not created
-    await db.sequelize.sync({force: true});
+    await db.sequelize.sync();
 
     // Can sync with force if the schema has become out of date - note that syncing with force is a destructive operation.
     // await db.sequelize.sync({ force: true }); <-- This will delete all tables and recreate them So if more tables are added then the current command inuse wont do anything because that only works if no tables are created.
