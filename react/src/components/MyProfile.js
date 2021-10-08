@@ -49,7 +49,7 @@ function MyProfile(props) {
                         <ul className="list-group list-group-flush">
                             <li className="list-group-item"><b style={{ color: "red" }}>Note:</b> Login details change on editing profile! Deleting your account will delete all your posts!</li>
                         </ul>
-                        <div className="card-footer" style={{ fontWeight: "bold", backgroundColor: "lightgray" }}>Joined: {new Date(props.user.dateJoined).toLocaleString("default", {day: "numeric", month: "short", year: "numeric"})}</div>
+                        <div className="card-footer" style={{ fontWeight: "bold", backgroundColor: "lightgray" }}>Joined: {new Date(props.user.dateJoined).toLocaleString("en-AU", {weekday: 'short', day: "numeric", month: "short", year: "numeric"})}</div>
                     </div>
                 </div>
             </div>

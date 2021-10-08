@@ -16,14 +16,26 @@ async function verifyUser(email, password) {
   return user;
 }
 
-async function findUser(id) {
-  const response = await axios.get(API_HOST + `/VCApi/users/select/${id}`);
+async function getProfile(email) {
+  const response = await axios.get(API_HOST + `/VCApi/users/select/${email}`);
+
+  return response.data;
+}
+
+async function findUser(email) {
+  const response = await axios.get(API_HOST + `/VCApi/users/select/${email}`);
 
   return response.data;
 }
 
 async function createUser(user) {
   const response = await axios.post(API_HOST + "/VCApi/users", user);
+
+  return response.data;
+}
+
+async function updateUser(user) {
+  const response = await axios.post(API_HOST + "/VCApi/users/update", user);
 
   return response.data;
 }
@@ -63,5 +75,6 @@ function removeUser() {
 export {
   verifyUser, findUser, createUser,
   getPosts, createPost,
-  getUser, removeUser, deleteUserDB
+  getUser, removeUser, deleteUserDB,
+  getProfile, updateUser
 }

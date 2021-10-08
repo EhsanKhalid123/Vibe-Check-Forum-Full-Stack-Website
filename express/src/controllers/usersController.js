@@ -11,7 +11,7 @@ exports.all = async (req, res) => {
 
 // Select one user from the database.
 exports.one = async (req, res) => {
-  const user = await db.users.findByPk(req.params.id);
+  const user = await db.users.findByPk(req.query.email);
 
   res.json(user);
 };
@@ -43,12 +43,15 @@ exports.create = async (req, res) => {
 
 // Update a user in the database.
 exports.update = async (req, res) => {
-  const email = req.params.email;
+  const email = req.body.email;
+  const hash = await argon2.hash(req.body.password, { type: argon2.argon2id });
 
   const user = await db.users.findByPk(email);
 
-  user.first_name = req.body.firstName;
-  user.last_name = req.body.lastName;
+  user.name = req.body.name;
+  user.username = req.body.username;
+  user.hashed_password =  hash;
+  user.email = req.body.email;
 
   await user.save();
 

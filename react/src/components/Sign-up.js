@@ -8,7 +8,7 @@ import { findUser, createUser } from "../data/repository";
 function Sign_up(props) {
 
     const history = useHistory();
-    const [values, setValues] = useState({name: "", username: "", email: "", password: ""});
+    const [values, setValues] = useState({ name: "", username: "", email: "", password: "" });
     const [errors, setErrors] = useState({});
 
     // Generic change handler.
@@ -36,7 +36,7 @@ function Sign_up(props) {
 
     const handleValidation = async () => {
         const trimmedValues = trimFields();
-        const formErrors = { };
+        const formErrors = {};
 
         let key = "name";
         let value = trimmedValues[key];
@@ -51,15 +51,17 @@ function Sign_up(props) {
             formErrors[key] = "Username is required.";
         else if (value.length > 32)
             formErrors[key] = "Username length cannot be greater than 32.";
-        else if (await findUser(trimmedValues.username) !== null)
-            formErrors[key] = "Username is already registered.";
 
         key = "email";
         value = trimmedValues[key];
         if (value.length === 0)
-            formErrors[key] = "Email is required.";
+            formErrors[key] = "Email address is required.";
         else if (value.length > 128)
             formErrors[key] = "Email length cannot be greater than 128.";
+        else if (!/\S+@\S+\.\S+/.test(value))
+            formErrors[key] = "Please enter a valid email address";
+        else if (await findUser(trimmedValues.email) !== null)
+            formErrors[key] = "Email is already registered.";
 
         key = "password";
         value = trimmedValues[key];
@@ -67,6 +69,8 @@ function Sign_up(props) {
             formErrors[key] = "Password is required.";
         else if (value.length < 6)
             formErrors[key] = "Password must contain at least 6 characters.";
+        else if (!/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)[^ ]{6,}/.test(value))
+            formErrors[key] = "Password must meet requirements!";
 
         setErrors(formErrors);
 
@@ -93,7 +97,7 @@ function Sign_up(props) {
             <hr style={{ width: "50%", marginBottom: "20px", borderWidth: "1px", backgroundColor: "#5dc7d8" }} />
             <p>&nbsp;</p>
             <form className="sign-up-form" onSubmit={handleSubmit} noValidate>
-            <div className="form-group">
+                <div className="form-group">
                     <label htmlFor="name"><b>Name:</b></label>
                     <input type="text" className="form-control" id="name" name="name" placeholder="Please enter your name" value={values.name} onChange={handleInputChange} required />
                     {errors.name && (

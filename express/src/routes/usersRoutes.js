@@ -6,13 +6,16 @@ module.exports = (express, app) => {
     router.get("/", controller.all);
   
     // Select a single user with id.
-    router.get("/select/:id", controller.one);
+    router.get("/select/:email", controller.one);
   
     // Select one user from the database if username and password are a match.
     router.get("/Sign-in", controller.login);
   
     // Deletes a user from the DB.
     router.post("/delete", controller.delete);
+
+    // Create a updates user details.
+    router.post("/update", controller.update);
 
     // Create a new user.
     router.post("/", controller.create);
