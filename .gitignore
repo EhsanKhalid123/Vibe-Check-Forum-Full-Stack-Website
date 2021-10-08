@@ -3,7 +3,6 @@
 # dependencies
 express/node_modules
 react/node_modules
-express/src/database/config.js
 /.pnp
 .pnp.js
 
