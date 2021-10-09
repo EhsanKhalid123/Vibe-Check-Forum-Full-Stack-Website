@@ -18,10 +18,6 @@ function App() {
 
   const [user, setUser] = useState(getUser());
 
-  const updatedMessage = (message) =>{
-    return message
-  }
-
   const loginUser = (user) => {
     setUser(user);
   };
@@ -50,7 +46,7 @@ function App() {
           }
           {user !== null &&
             <Route path="/MyProfile">
-              <MyProfile updatedMessage={updatedMessage} user={user} loginUser={loginUser} logoutUser={logoutUser} />
+              <MyProfile user={user} loginUser={loginUser} logoutUser={logoutUser} />
             </Route>
           }
           <Route path="/Sign-in">
