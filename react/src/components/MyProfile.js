@@ -7,7 +7,7 @@ import { deleteUserDB, removePost} from "../data/repository";
 function MyProfile(props) {
 
     const [confirmPopup, setconfirmPopup] = useState(false);
-    // const { message } = useContext(MessageContext);
+    const { message } = useContext(MessageContext);
 
     // Popup Toggle Switch Function
     const togglePopup = () => {
@@ -30,7 +30,7 @@ function MyProfile(props) {
         // https://getbootstrap.com/docs/4.0/components/card/
 
         <div>
-            {/* {message && <div className="alert alert-success" role="alert">{message}</div>} */}
+            {message && <div className="alert alert-success" role="alert">{message}</div>}
             <div className="profile-card">
                 <div className="text-center">
                     <p>&nbsp;</p>

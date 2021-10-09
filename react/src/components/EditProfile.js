@@ -10,7 +10,7 @@ function EditProfile(props) {
     const [values, setValues] = useState({ name: props.user.name, username: props.user.username });
     const [errors, setErrors] = useState({});
     const history = useHistory();
-    // const { setMessage } = useContext(MessageContext);
+    const { setMessage } = useContext(MessageContext);
 
     // const [user, setUser] = useState(getProfile(props.user.email));
     // // console.log(getProfile(props.user.email));
@@ -37,10 +37,10 @@ function EditProfile(props) {
         const user = await updateUser(trimmedValues, props.user.email);
 
         // Show success message.
-        // setMessage(
-        //     <>
-        //         <strong>{user.name} {user.username}</strong> has been updated successfully.
-        //     </>);
+        setMessage(
+            <>
+                <strong>{user.name} {user.username}</strong> has been updated successfully.
+            </>);
 
         // Set user state.
         props.loginUser(user);
