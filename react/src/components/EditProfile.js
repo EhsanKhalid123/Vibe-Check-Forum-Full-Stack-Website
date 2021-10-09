@@ -1,16 +1,21 @@
 // Importing React classes and functions from node modules
 import { useState, useEffect, useContext } from "react";
 import { Link, useParams, useHistory } from "react-router-dom";
-import { findUser, updateUser } from "../data/repository";
+import { findUser, getProfile, updateUser } from "../data/repository";
 import MessageContext from "../data/MessageContext";
 
 // Functional Component for Signup Page
 function EditProfile(props) {
 
-    const [values, setValues] = useState({ name: "", username: "", email: "", password: "" });
+    const [values, setValues] = useState({ name: props.user.name, username: props.user.username });
     const [errors, setErrors] = useState({});
     const history = useHistory();
-    const { email } = useParams();
+    // const { setMessage } = useContext(MessageContext);
+
+    // const [user, setUser] = useState(getProfile(props.user.email));
+    // // console.log(getProfile(props.user.email));
+    // console.log(user);
+    // console.log(user.name);
 
     // Declared constants to get from EditForm page as EditForm page returns these functions
     // Code taken from Lab Examples of Week 4 Activity 1
@@ -28,17 +33,20 @@ function EditProfile(props) {
         if (!isValid)
             return;
 
-        // Create user.
-        const user = await updateUser(trimmedValues);
+        // update user.
+        const user = await updateUser(trimmedValues, props.user.email);
 
         // Show success message.
         // setMessage(
         //     <>
-        //         <strong>{user.name}</strong> profile has been updated successfully.
+        //         <strong>{user.name} {user.username}</strong> has been updated successfully.
         //     </>);
 
+        // Set user state.
+        props.loginUser(user);
+
         // Navigate to the profiles page.
-        history.push("/");
+        history.push("/MyProfile");
     };
 
     const handleValidation = async () => {
@@ -48,36 +56,16 @@ function EditProfile(props) {
         let key = "name";
         let value = trimmedValues[key];
         if (value.length === 0)
-            formErrors[key] = "Name is required.";
+            formErrors[key] = "Name field cannot be empty";
         else if (value.length > 40)
             formErrors[key] = "Name length cannot be greater than 40.";
 
         key = "username";
         value = trimmedValues[key];
         if (value.length === 0)
-            formErrors[key] = "Username is required.";
+            formErrors[key] = "Username field cannot be empty";
         else if (value.length > 32)
             formErrors[key] = "Username length cannot be greater than 32.";
-
-        key = "email";
-        value = trimmedValues[key];
-        if (value.length === 0)
-            formErrors[key] = "Email address is required.";
-        else if (value.length > 128)
-            formErrors[key] = "Email length cannot be greater than 128.";
-        else if (!/\S+@\S+\.\S+/.test(value))
-            formErrors[key] = "Please enter a valid email address";
-        else if (await findUser(trimmedValues.email) !== null)
-            formErrors[key] = "Email is already registered.";
-
-        key = "password";
-        value = trimmedValues[key];
-        if (value.length === 0)
-            formErrors[key] = "Password is required.";
-        else if (value.length < 6)
-            formErrors[key] = "Password must contain at least 6 characters.";
-        else if (!/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)[^ ]{6,}/.test(value))
-            formErrors[key] = "Password must meet requirements!";
 
         setErrors(formErrors);
 
@@ -106,6 +94,10 @@ function EditProfile(props) {
             <p>&nbsp;</p>
             <form className="sign-up-form" onSubmit={handleSubmit} noValidate>
                 <div className="form-group">
+                    <label htmlFor="name"><b>Email:</b></label>
+                    <input type="text" className="form-control" id="name" name="name" placeholder="Your Email Address" value={props.user.email} onChange={handleInputChange} disabled />
+                </div>
+                <div className="form-group">
                     <label htmlFor="name"><b>Name:</b></label>
                     <input type="text" className="form-control" id="name" name="name" placeholder="Enter a New Name" value={values.name} onChange={handleInputChange} required />
                     {errors.name && (
@@ -117,21 +109,6 @@ function EditProfile(props) {
                     <input type="text" className="form-control" id="username" name="username" placeholder="Enter a New Username" value={values.username} onChange={handleInputChange} required />
                     {errors.username && (
                         <p style={{ color: "red", textAlign: "center", fontSize: "18px", margin: "10px 10px 10px 10px" }}>{errors.name}</p>
-                    )}
-                </div>
-                <div className="form-group">
-                    <label htmlFor="email"><b>Email:</b></label>
-                    <input type="email" className="form-control" id="email" name="email" placeholder="Enter a new Email" value={values.email} onChange={handleInputChange} required />
-                    {errors.email && (
-                        <p style={{ color: "red", textAlign: "center", fontSize: "18px", margin: "10px 10px 10px 10px" }}>{errors.email}</p>
-                    )}
-                </div>
-                <div className="form-group">
-                    <label htmlFor="password"><b>Password:</b></label>
-                    <input type="password" className="form-control" id="password" name="password" placeholder="Enter a New Password" value={values.password} onChange={handleInputChange} required />
-                    <small id="emailHelp" className="form-text text-muted" style={{ fontWeight: "bold" }}>Password must be 6 characters, mix of upper and lowercase, numbers and punctuation</small>
-                    {errors.password && (
-                        <p style={{ color: "red", textAlign: "center", fontSize: "18px", margin: "10px 10px 10px 10px" }}>{errors.password}</p>
                     )}
                 </div>
                 <a href="/MyProfile">

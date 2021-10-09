@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-import { findUser, createUser } from "../data/repository";
+import { findUser, createUser, setUser } from "../data/repository";
 
 // Functional Component for Signup Page
 function Sign_up(props) {
@@ -29,6 +29,9 @@ function Sign_up(props) {
 
         // Set user state.
         props.loginUser(user);
+
+        // After user signs up save state and Keep user logged in.
+        setUser(user);
 
         // Navigate to the home page.
         history.push("/");

@@ -1,11 +1,13 @@
 // Importing React classes and functions from node modules
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import MessageContext from "../data/MessageContext";
 import { deleteUserDB, removePost} from "../data/repository";
 
 // Functional Component for MyProfile
 function MyProfile(props) {
 
     const [confirmPopup, setconfirmPopup] = useState(false);
+    // const { message } = useContext(MessageContext);
 
     // Popup Toggle Switch Function
     const togglePopup = () => {
@@ -28,6 +30,7 @@ function MyProfile(props) {
         // https://getbootstrap.com/docs/4.0/components/card/
 
         <div>
+            {/* {message && <div className="alert alert-success" role="alert">{message}</div>} */}
             <div className="profile-card">
                 <div className="text-center">
                     <p>&nbsp;</p>

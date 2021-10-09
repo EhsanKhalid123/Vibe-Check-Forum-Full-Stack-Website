@@ -18,6 +18,10 @@ function App() {
 
   const [user, setUser] = useState(getUser());
 
+  const updatedMessage = (message) =>{
+    return message
+  }
+
   const loginUser = (user) => {
     setUser(user);
   };
@@ -34,29 +38,29 @@ function App() {
         <Header />
         <Navigation user={user} logoutUser={logoutUser} />
         <Switch>
-        {user !== null &&
+          {user !== null &&
             <Route path="/Forum">
               <Forum user={user} loginUser={loginUser} logoutUser={logoutUser} />
             </Route>
           }
-        {user !== null &&
+          {user !== null &&
             <Route path="/EditProfile" render={props => (
               <EditProfile {...props} user={user} loginUser={loginUser} logoutUser={logoutUser} />
             )} />
           }
-        {user !== null &&
+          {user !== null &&
             <Route path="/MyProfile">
-              <MyProfile user={user} loginUser={loginUser} logoutUser={logoutUser} />
+              <MyProfile updatedMessage={updatedMessage} user={user} loginUser={loginUser} logoutUser={logoutUser} />
             </Route>
           }
-          <Route path="/Sign-up">
-            <Signup loginUser={loginUser}/>
-          </Route>
           <Route path="/Sign-in">
-            <Login loginUser={loginUser}/>
+            <Login loginUser={loginUser} />
+          </Route>
+          <Route path="/Sign-up">
+            <Signup loginUser={loginUser} />
           </Route>
           <Route path={["/Home", "/"]}>
-            <Home user={user}/>
+            <Home user={user} />
           </Route>
         </Switch>
         <Footer />

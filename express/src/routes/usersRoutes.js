@@ -1,25 +1,28 @@
 module.exports = (express, app) => {
-    const controller = require("../controllers/usersController.js");
-    const router = express.Router();
-  
-    // Select all users.
-    router.get("/", controller.all);
-  
-    // Select a single user with id.
-    router.get("/select/:email", controller.one);
-  
-    // Select one user from the database if username and password are a match.
-    router.get("/Sign-in", controller.login);
-  
-    // Deletes a user from the DB.
-    router.post("/delete", controller.delete);
+  const controller = require("../controllers/usersController.js");
+  const router = express.Router();
 
-    // Create a updates user details.
-    router.post("/update", controller.update);
+  // Select all users.
+  router.get("/", controller.all);
 
-    // Create a new user.
-    router.post("/", controller.create);
-  
-    // Add routes to server.
-    app.use("/VCApi/users", router);
-  };
+  // Select a single user with id.
+  router.get("/select/:email", controller.one);
+
+  // Select a single user with id.
+  router.get("/get/:email", controller.one2);
+
+  // Select one user from the database if username and password are a match.
+  router.get("/Sign-in", controller.login);
+
+  // Deletes a user from the DB.
+  router.post("/delete", controller.delete);
+
+  // Create a updates user details.
+  router.post("/update/:email", controller.update);
+
+  // Create a new user.
+  router.post("/", controller.create);
+
+  // Add routes to server.
+  app.use("/VCApi/users", router);
+};
