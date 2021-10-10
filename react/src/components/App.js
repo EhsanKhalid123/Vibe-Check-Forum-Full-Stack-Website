@@ -25,7 +25,7 @@ function App() {
     if (message === null)
       return;
 
-    const id = setTimeout(() => setMessage(null), 5000);
+    const id = setTimeout(() => setMessage(null), 7000);
 
     // When message changes clear the queued timeout function.
     return () => clearTimeout(id);

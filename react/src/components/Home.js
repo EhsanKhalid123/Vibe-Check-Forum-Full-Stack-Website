@@ -1,19 +1,23 @@
 // Importing React classes and functions from node modules
-import React from "react";
+import React, { useContext } from "react";
 import logo from "../logo.png";
+import MessageContext from "../data/MessageContext";
 
 
 // Functional Component for the Home page
 function Home(props) {
+
+    const { message } = useContext(MessageContext);
 
     // Returns HTML elements to display content on pages
     return (
 
         // Contents of the main page uses basic HTML elements
         <div className="text-center">
+            {message && <div className="alert alert-success" style={{ margin: "20px" }} role="alert">{message}</div>}
             <p>&nbsp;</p>
             <h1 className="home-welcome display-4">Welcome to Vibe Check</h1>
-            {props.user !== null && <h4 style={{margin: "0px 10px 10px 10px"}}><strong>Hello {props.user.username}!</strong></h4>}
+            {props.user !== null && <h4 style={{ margin: "0px 10px 10px 10px" }}><strong>Hello {props.user.username}!</strong></h4>}
             <img src={logo} className="home-logo-image" alt="logo" />
             <div>Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
             <hr style={{ width: "90%", borderWidth: "1px", backgroundColor: "#5dc7d8" }} />

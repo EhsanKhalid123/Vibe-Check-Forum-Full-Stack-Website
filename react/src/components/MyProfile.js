@@ -31,7 +31,7 @@ function MyProfile(props) {
         // https://getbootstrap.com/docs/4.0/components/card/
 
         <div>
-            {message && <div className="alert alert-success" role="alert">{message}</div>}
+            {message && <div className="alert alert-success text-center" style={{ margin: "20px" }} role="alert">{message}</div>}
             <div className="profile-card">
                 <div className="text-center">
                     <p>&nbsp;</p>

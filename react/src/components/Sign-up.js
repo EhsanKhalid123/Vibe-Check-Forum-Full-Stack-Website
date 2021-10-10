@@ -1,8 +1,9 @@
 // Importing React classes and functions from node modules
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { findUser, createUser, setUser } from "../data/repository";
+import MessageContext from "../data/MessageContext";
 
 // Functional Component for Signup Page
 function Sign_up(props) {
@@ -10,6 +11,7 @@ function Sign_up(props) {
     const history = useHistory();
     const [values, setValues] = useState({ name: "", username: "", email: "", password: "" });
     const [errors, setErrors] = useState({});
+    const { setMessage } = useContext(MessageContext);
 
     // Generic change handler.
     const handleInputChange = (event) => {
@@ -26,6 +28,12 @@ function Sign_up(props) {
 
         // Create user.
         const user = await createUser(trimmedValues);
+
+        // Show success message.
+        setMessage(
+            <>
+                <strong>{user.name}</strong> You have successfully registered!
+            </>);
 
         // Set user state.
         props.loginUser(user);
