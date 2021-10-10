@@ -2,7 +2,7 @@
 import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import MessageContext from "../data/MessageContext";
-import { deleteUserDB, removePost } from "../data/repository";
+import { deleteUserDB } from "../data/repository";
 
 // Functional Component for MyProfile
 function MyProfile(props) {

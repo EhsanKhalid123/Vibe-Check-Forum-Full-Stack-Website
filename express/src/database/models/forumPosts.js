@@ -1,3 +1,5 @@
+const { Sequelize } = require("sequelize");
+
 // Creating a Sequelize instance and Table.
 module.exports = (sequelize, DataTypes) =>
     // Defining the table name.
@@ -12,6 +14,12 @@ module.exports = (sequelize, DataTypes) =>
         postText: {
             type: DataTypes.STRING(600),
             allowNull: false
+        },
+        // Defining Table Fields/Data with properties.
+        postDate: {
+            type: DataTypes.DATE(),
+            allowNull: false,
+            defaultValue: Sequelize.NOW
         }
     }, {
         // Don't add the timestamp attributes (updatedAt, createdAt).

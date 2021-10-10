@@ -1,16 +1,34 @@
 // Importing React classes and functions from node modules
 import { useState, useEffect, useContext } from "react";
 import { Link, useParams, useHistory } from "react-router-dom";
-import { findUser, getProfile, updateUser } from "../data/repository";
+import { findUser, getProfile, setUser, updateUser } from "../data/repository";
 import MessageContext from "../data/MessageContext";
 
 // Functional Component for Signup Page
 function EditProfile(props) {
-
-    const [values, setValues] = useState({ name: props.user.name, username: props.user.username });
+    
+    // const [profile, setUserDetails] = useState({});
+    const [values, setValues] = useState({email: props.user.email, name: props.user.name, username: props.user.username });
     const [errors, setErrors] = useState({});
     const history = useHistory();
     const { setMessage } = useContext(MessageContext);
+    
+    // const userDetail = await getProfile(props.user.email);
+
+    // setUserDetails(userDetail);
+    // console.log(profile)
+
+//       // Load profile.
+//   useEffect(() => {
+//     async function loadProfile() {
+//         const userDetail = await getProfile(props.user.email);
+
+//         setUserDetails(userDetail);
+//     }
+//     loadProfile();
+//   }, [props.user.email]);
+
+//   console.log(profile);
 
     // const [user, setUser] = useState(getProfile(props.user.email));
     // // console.log(getProfile(props.user.email));
@@ -94,8 +112,8 @@ function EditProfile(props) {
             <p>&nbsp;</p>
             <form className="sign-up-form" onSubmit={handleSubmit} noValidate>
                 <div className="form-group">
-                    <label htmlFor="name"><b>Email:</b></label>
-                    <input type="text" className="form-control" id="name" name="name" placeholder="Your Email Address" value={props.user.email} onChange={handleInputChange} disabled />
+                    <label htmlFor="email"><b>Email:</b></label>
+                    <input type="email" className="form-control" id="email" name="email" placeholder="Your Email Address" value={values.email} onChange={handleInputChange} disabled />
                 </div>
                 <div className="form-group">
                     <label htmlFor="name"><b>Name:</b></label>

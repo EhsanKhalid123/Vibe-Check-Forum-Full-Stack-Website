@@ -1,18 +1,64 @@
 // Importing React classes and functions from node modules
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { getPosts, createPost, getProfile, deletePost } from "../data/repository";
 
 // Functional Component for Forum Page
 function Forum(props) {
 
-    // Declared constants to get from useForm page as useForm page returns these functions
-    // Code taken from Lab Examples of Week 4 Activity 1
+    const [post, setPost] = useState("");
+    const [errorMessage, setErrorMessage] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [posts, setPosts] = useState([]);
+    const [userData, setUserData] = useState([]);
 
+    // Load posts.
+    useEffect(() => {
+        async function loadPosts() {
+            const currentPosts = await getPosts();
 
-    // Function for when successfull passed validations, display message
-    // Code taken from Lab Examples of Week 4 Activity 1
-    function signUpSuccessfull() {
-        console.log('No errors, submit callback called!');
-    }
+            setPosts(currentPosts);
+            setIsLoading(false);
+        }
+
+        async function loadUserDetails(){
+            const currentDetails = await getProfile(props.user.email);
+            setUserData(currentDetails)
+
+        }
+        loadUserDetails();
+        loadPosts();
+    }, []);
+
+    const handleInputChange = (event) => {
+        setPost(event.target.value);
+        setErrorMessage("");
+    };
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
+        // Trim the post text.
+        const trimmedPost = post.trim();
+
+        if (trimmedPost === "") {
+            setErrorMessage("A post cannot be empty!");
+            return;
+        } else if (trimmedPost.length > 600) {
+            setErrorMessage("A post cannot be greater than 600 characters!");
+            return;
+        }
+
+        // Create post.
+        const newPost = { postText: trimmedPost, email: props.user.email, postDate: new Date().toLocaleString()};
+        await createPost(newPost);
+
+        // Add post to locally stored posts.
+        setPosts([...posts, newPost]);
+
+        // Reset post content.
+        setPost("");
+        setErrorMessage("");
+    };
 
     // Returns HTML elements and content to display on the pages
     return (
@@ -24,26 +70,38 @@ function Forum(props) {
             <hr style={{ width: "90%", borderWidth: "1px", backgroundColor: "#5dc7d8" }} />
             <p style={{ fontSize: "20px" }}>Feel Free to make a post!</p>
             <p>&nbsp;</p>
-           
-            <form >
+
+            <form onSubmit={handleSubmit} >
                 <div className="form-group">
                     <h3 style={{ margin: "0 25% 10px 25%", width: "50%", textAlign: "left" }}>Create a Post:</h3>
-                    <textarea style={{ margin: "auto", width: "50%", height: "110px", border: "solid 2px #5dc7d8" }} className="form-control" id="textarea" name="textarea" rows="3" />
+                    <textarea style={{ margin: "auto", width: "50%", height: "110px", border: "solid 2px #5dc7d8" }} className="form-control" id="postText" name="postText" rows="3" values={post} onChange={handleInputChange} />
                 </div>
+                {errorMessage && (
+                    <p style={{ color: "red", textAlign: "center", fontSize: "18px", margin: "10px 10px 10px 10px" }}>{errorMessage}</p>
+                )}
                 <button type="submit" style={{ textAlign: "right", margin: "0 0 0 45%", padding: "5px 25px 5px 25px" }} className="btn btn-outline-primary mr-sm-2" >Post</button>
+                <button type="button" style={{ textAlign: "right", margin: "0 0 0 45%", padding: "5px 25px 5px 25px" }} className="btn btn-outline-danger mr-sm-2" onClick={() => { setPost(""); setErrorMessage(null); }}  >Cancel</button>
             </form>
             <p>&nbsp;</p>
-            {props.user.posts === null && (
-                <div className="posts card" >
-                    <div className="card-body">
-                        <h5 style={{ float: "left", textAlign: "center"}} className="card-title">{props.posts3}</h5>
-                        <span style={{ float: "right", textAlign: "center", color: "#212121"}}>{props.posts2}</span>
-                        <p style={{margin: "0 0 10% 0"}}></p>
-                        <p style={{clear: "both", float: "left", textAlign: "left"}} className="card-text">{props.posts}</p>
-                        <button  type="submit" style={{ float: "right", textAlign: "right" }} className="btn btn-danger mr-sm-2" >Delete</button>
-                    </div>
-                </div>
-            )}
+            <div>
+            </div>
+            {isLoading ?
+                <div>Loading posts...</div>
+                :
+                posts.length === 0 ?
+                    <span className="text-muted">No posts have been submitted.</span>
+                    :
+                    posts.map((userPosts) =>
+                        <div className="posts card" >
+                            <div className="card-body">
+                                <h5 style={{ float: "left", textAlign: "center" }} className="card-title">{userData.username}</h5>
+                                <span style={{ float: "right", textAlign: "center", color: "#212121" }}>{new Date(userPosts.postDate).toLocaleString("en-AU", { hour12: true, hour: 'numeric', minute: 'numeric', day: "numeric", month: "short", year: "numeric" })}</span>
+                                <p style={{ margin: "0 0 10% 0" }}></p>
+                                <p style={{ clear: "both", float: "left", textAlign: "left" }} className="card-text">{userPosts.postText}</p>
+                                <button type="submit" style={{ float: "right", textAlign: "right" }} className="btn btn-danger mr-sm-2" onClick={() => {deletePost(userPosts)}} >Delete</button>
+                            </div>
+                        </div>
+                    )}
             <p>&nbsp;</p>
         </div>
     );

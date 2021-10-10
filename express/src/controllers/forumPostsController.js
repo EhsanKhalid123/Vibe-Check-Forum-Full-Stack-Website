@@ -18,3 +18,18 @@ exports.create = async (req, res) => {
 
   res.json(post);
 };
+
+// Remove a user from the database.
+exports.delete = async (req, res) => {
+  const forumPosts_id = req.body.forumPosts_id;
+
+  let removed = false;
+
+  const post = await db.forumPosts.findByPk(forumPosts_id);
+  if(post !== null) {
+    await post.destroy();
+    removed = true;
+  }
+
+  return res.json(removed);
+};
