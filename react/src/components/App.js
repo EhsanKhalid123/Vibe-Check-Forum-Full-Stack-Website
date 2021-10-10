@@ -1,5 +1,5 @@
 // Importing React classes and functions from node modules & from components
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { getUser, removeUser } from "../data/repository";
 
@@ -13,10 +13,23 @@ import Login from './Login';
 import MyProfile from "./MyProfile";
 import EditProfile from './EditProfile';
 import Forum from './Forum';
+import MessageContext from "../data/MessageContext";
 
 function App() {
 
   const [user, setUser] = useState(getUser());
+  const [message, setMessage] = useState(null);
+
+  // Set message to null automatically after a period of time.
+  useEffect(() => {
+    if (message === null)
+      return;
+
+    const id = setTimeout(() => setMessage(null), 5000);
+
+    // When message changes clear the queued timeout function.
+    return () => clearTimeout(id);
+  }, [message]);
 
   const loginUser = (user) => {
     setUser(user);
@@ -30,37 +43,39 @@ function App() {
   return (
     <div>
       {/* Router is used for routing to different pages */}
-      <Router>
-        <Header />
-        <Navigation user={user} logoutUser={logoutUser} />
-        <Switch>
-          {user !== null &&
-            <Route path="/Forum">
-              <Forum user={user} loginUser={loginUser} logoutUser={logoutUser} />
+      <MessageContext.Provider value={{ message, setMessage }}>
+        <Router>
+          <Header />
+          <Navigation user={user} logoutUser={logoutUser} />
+          <Switch>
+            {user !== null &&
+              <Route path="/Forum">
+                <Forum user={user} loginUser={loginUser} logoutUser={logoutUser} />
+              </Route>
+            }
+            {user !== null &&
+              <Route path="/EditProfile/update/:email" render={props => (
+                <EditProfile {...props} user={user} loginUser={loginUser} logoutUser={logoutUser} />
+              )} />
+            }
+            {user !== null &&
+              <Route path="/MyProfile">
+                <MyProfile user={user} loginUser={loginUser} logoutUser={logoutUser} />
+              </Route>
+            }
+            <Route path="/Sign-in">
+              <Login loginUser={loginUser} />
             </Route>
-          }
-          {user !== null &&
-            <Route path="/EditProfile" render={props => (
-              <EditProfile {...props} user={user} loginUser={loginUser} logoutUser={logoutUser} />
-            )} />
-          }
-          {user !== null &&
-            <Route path="/MyProfile">
-              <MyProfile user={user} loginUser={loginUser} logoutUser={logoutUser} />
+            <Route path="/Sign-up">
+              <Signup loginUser={loginUser} />
             </Route>
-          }
-          <Route path="/Sign-in">
-            <Login loginUser={loginUser} />
-          </Route>
-          <Route path="/Sign-up">
-            <Signup loginUser={loginUser} />
-          </Route>
-          <Route path={["/Home", "/"]}>
-            <Home user={user} />
-          </Route>
-        </Switch>
-        <Footer />
-      </Router>
+            <Route path={["/Home", "/"]}>
+              <Home user={user} />
+            </Route>
+          </Switch>
+          <Footer />
+        </Router>
+      </MessageContext.Provider>
     </div>
   );
 }

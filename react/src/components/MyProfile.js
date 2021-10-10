@@ -1,7 +1,8 @@
 // Importing React classes and functions from node modules
 import React, { useState, useContext } from "react";
+import { Link } from "react-router-dom";
 import MessageContext from "../data/MessageContext";
-import { deleteUserDB, removePost} from "../data/repository";
+import { deleteUserDB, removePost } from "../data/repository";
 
 // Functional Component for MyProfile
 function MyProfile(props) {
@@ -18,7 +19,7 @@ function MyProfile(props) {
         deleteUserDB(props.user);
         // removePost();
         togglePopup();
-        
+
         // Navigate to the home page.
         props.logoutUser();
     }
@@ -46,13 +47,14 @@ function MyProfile(props) {
                             <h6 className="card-subtitle mb-2 text-muted">{props.user.email}</h6>
                             <p className="card-text">This is your profile information, you can choose to edit your profile or delete it!</p>
                             {/* <a href="#" className="card-link">Card link</a>*/}
-                            <a href="/EditProfile" className="btn btn-info" style={{ margin: "10px" }}>Edit</a>
+                            <Link className="btn btn-info" style={{ margin: "10px" }} to={`/EditProfile/update/${props.user.email}`}>Edit</Link>
+                            <a href={`/EditProfile/update/${props.user.email}`} className="btn btn-info" style={{ margin: "10px" }}>Edit</a>
                             <a onClick={togglePopup} className="btn btn-danger">Delete</a>
                         </div>
                         <ul className="list-group list-group-flush">
                             <li className="list-group-item"><b style={{ color: "red" }}>Note:</b> Login details change on editing profile! Deleting your account will delete all your posts!</li>
                         </ul>
-                        <div className="card-footer" style={{ fontWeight: "bold", backgroundColor: "lightgray" }}>Joined: {new Date(props.user.dateJoined).toLocaleString("en-AU", {weekday: 'short', day: "numeric", month: "short", year: "numeric"})}</div>
+                        <div className="card-footer" style={{ fontWeight: "bold", backgroundColor: "lightgray" }}>Joined: {new Date(props.user.dateJoined).toLocaleString("en-AU", { weekday: 'short', day: "numeric", month: "short", year: "numeric" })}</div>
                     </div>
                 </div>
             </div>

@@ -39,7 +39,7 @@ function EditProfile(props) {
         // Show success message.
         setMessage(
             <>
-                <strong>{user.name} {user.username}</strong> has been updated successfully.
+                <strong>{user.email}</strong>account has been updated successfully.
             </>);
 
         // Set user state.
