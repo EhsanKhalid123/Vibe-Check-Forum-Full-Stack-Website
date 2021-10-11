@@ -11,7 +11,7 @@ exports.all = async (req, res) => {
 
 // Select one user from the database.
 exports.one = async (req, res) => {
-  const user = await db.users.findByPk(req.query.email);
+  const user = await db.users.findByPk(req.params.email);
 
   res.json(user);
 };

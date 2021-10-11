@@ -86,7 +86,7 @@ function EditProfile(props) {
         <div>
             <h1 className="text-center mb-3" style={{ padding: "50px 20px 0 20px" }}>Edit Your Profile Details</h1>
             <hr style={{ width: "50%", marginBottom: "20px", borderWidth: "1px", backgroundColor: "#5dc7d8" }} />
-            <p style={{ textAlign: "center", fontSize: "20px" }}><b style={{ color: "red" }}>Note:</b> Same details must be entered if you don't want certain details to change!</p>
+            <p style={{ textAlign: "center", fontSize: "20px" }}><b style={{ color: "red" }}>Note:</b> To change your email you must contact us!</p>
             <p>&nbsp;</p>
             <form className="sign-up-form" onSubmit={handleSubmit} noValidate>
                 <div className="form-group">

@@ -10,6 +10,14 @@ function Forum(props) {
     const [isLoading, setIsLoading] = useState(true);
     const [posts, setPosts] = useState([]);
     const [userData, setUserData] = useState([]);
+    const [confirmPopup, setconfirmPopup] = useState(false);
+
+    // Popup Toggle Switch Function
+    const togglePopup = (postID) => {
+        if (postID === 73) {
+            setconfirmPopup(!confirmPopup);
+        }
+    }
 
     // Load posts.
     useEffect(() => {
@@ -53,7 +61,7 @@ function Forum(props) {
         const newPost = { postText: trimmedPost, email: props.user.email, postDate: new Date().toLocaleString() };
         await createPost(newPost);
 
-        newPost.user.username = props.user.username;
+        newPost.user = { username: props.user.username };
 
         // Add post to locally stored posts.
         setPosts([...posts, newPost]);
@@ -83,7 +91,7 @@ function Forum(props) {
                     <p style={{ color: "red", textAlign: "center", fontSize: "18px", margin: "10px 10px 10px 10px" }}>{errorMessage}</p>
                 )}
                 <button type="submit" style={{ textAlign: "right", margin: "0 0 0 40%", padding: "5px 25px 5px 25px" }} className="btn btn-outline-primary mr-sm-2" >Post</button>
-                <button type="button" style={{ textAlign: "right"}} className="btn btn-outline-danger mr-sm-2" onClick={() => { setPost(""); setErrorMessage(null); }}  >Cancel</button>
+                <button type="button" style={{ textAlign: "right" }} className="btn btn-outline-danger mr-sm-2" onClick={() => { setPost(""); setErrorMessage(null); }}  >Cancel</button>
             </form>
             <p>&nbsp;</p>
             <div>
@@ -95,19 +103,39 @@ function Forum(props) {
                     <span className="text-muted">No posts have been submitted.</span>
                     :
                     posts.map((userPosts) =>
-                        <div className="posts card" >
-                            <div className="card-body">
-                                <h5 style={{ float: "left", textAlign: "center" }} className="card-title">{userPosts.user.username}</h5>
-                                <span style={{ float: "right", textAlign: "center", color: "#212121" }}>{new Date(userPosts.postDate).toLocaleString("en-AU", { hour12: true, hour: 'numeric', minute: 'numeric', day: "numeric", month: "short", year: "numeric" })}</span>
-                                <p style={{ margin: "0 0 10% 0" }}></p>
-                                <p style={{ clear: "both", float: "left", textAlign: "left" }} className="card-text">{userPosts.postText}</p>
-                                {userPosts.email === userData.email &&
-                                <button type="submit" style={{ float: "right", textAlign: "right" }} className="btn btn-danger mr-sm-2" onClick={async () => { await deletePost(userPosts); setPosts(await getPosts()); }} >Delete</button>
-                                }
+                        <div>
+                            <div className="posts card" >
+                                <div className="card-body">
+                                    <h5 style={{ float: "left", textAlign: "center" }} className="card-title">{userPosts.user.username}</h5>
+                                    <span style={{ float: "right", textAlign: "center", color: "#212121" }}>{new Date(userPosts.postDate).toLocaleString("en-AU", { hour12: true, hour: 'numeric', minute: 'numeric', day: "numeric", month: "short", year: "numeric" })}</span>
+                                    <p style={{ margin: "0 0 10% 0" }}></p>
+                                    <p style={{ clear: "both", float: "left", textAlign: "left" }} className="card-text">{userPosts.postText}</p>
+                                    {userPosts.email === userData.email &&
+                                        <div>
+                                            <button type="submit" style={{ float: "right", textAlign: "right" }} className="btn btn-danger mr-sm-2" onClick={async () => { await deletePost(userPosts); setPosts(await getPosts()); }} >Delete</button>
+                                            <button style={{ float: "right", textAlign: "right" }} className="btn btn-dark mr-sm-2" onClick={togglePopup(userPosts.forumPosts_id)} >Reply</button>
+                                        </div>
+                                    }
                                 </div>
+                            </div>
+                            <div>
+                                {confirmPopup === false ?
+                                    <div><p>&nbsp;</p></div>
+                                    :
+                                    confirmPopup && userPosts.forumPosts_id &&
+                                    <div>
+                                        <div className="form-group">
+                                            <h5 style={{ margin: "10px 25% 10px 25%", width: "50%", textAlign: "left" }}>Reply to a post:</h5>
+                                            <textarea style={{ margin: "auto", width: "50%", height: "110px", border: "solid 2px #5dc7d8" }} className="form-control" id="postText" name="postText" rows="3" value={post} onChange={handleInputChange} />
+                                        </div>
+                                        <button type="submit" style={{ textAlign: "right", margin: "0 0 0 40%", padding: "5px 25px 5px 25px" }} className="btn btn-outline-primary mr-sm-2" >Post</button>
+                                        <button type="button" style={{ textAlign: "right" }} className="btn btn-outline-danger mr-sm-2" onClick={() => { setPost(""); setErrorMessage(null); togglePopup(); }}  >Cancel</button>
+                                        <p>&nbsp;</p>
+                                    </div>
+                                }
+                            </div>
                         </div>
                     )}
-            <p>&nbsp;</p>
         </div>
     );
 }

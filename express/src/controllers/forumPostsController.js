@@ -40,12 +40,15 @@ exports.delete2 = async (req, res) => {
 
   let removed = false;
 
-  const post = await db.forumPosts.findAll({where: { email: email }});
+  // const post = await db.forumPosts.findAll({where: { email: email }});
 
-  if(post !== null) {
-    await post.destroy();
-    removed = true;
-  }
+  // // if(post !== null) {
+  //   await post.destroy();
+  //   removed = true;
+  // }
 
-  return res.json(removed);
+  const post = await db.forumPosts.destroy({where: { email: email }});
+
+
+  return res.json(post);
 };

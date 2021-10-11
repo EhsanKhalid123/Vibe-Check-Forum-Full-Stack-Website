@@ -14,7 +14,7 @@ function Home(props) {
 
         // Contents of the main page uses basic HTML elements
         <div className="text-center">
-            {message && <div className="alert alert-success" style={{ margin: "20px" }} role="alert">{message}</div>}
+            {message && props.user !== null && <div className="alert alert-success" style={{ margin: "20px" }} role="alert">{message}</div>}
             <p>&nbsp;</p>
             <h1 className="home-welcome display-4">Welcome to Vibe Check</h1>
             {props.user !== null && <h4 style={{ margin: "0px 10px 10px 10px" }}><strong>Hello {props.user.username}!</strong></h4>}

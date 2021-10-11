@@ -17,12 +17,13 @@ function MyProfile(props) {
 
     const deleteProfile = async (event) => {
 
-        console.log(await deletePost2(props.user));
-        // await deleteUserDB(props.user);
+        await deletePost2(props.user);
+        await deleteUserDB(props.user);
+
         togglePopup();
 
         // Navigate to the home page.
-        // props.logoutUser();
+        props.logoutUser();
     }
 
     // Returns HTML elements and contents to display on page
@@ -66,7 +67,7 @@ function MyProfile(props) {
                         <div className="box">
                             <h5 className="card-header bg-warning text-center" style={{ color: "white" }}><b>Confirm!</b></h5>
                             <div style={{ margin: "0 auto", textAlign: "center" }}>
-                                <p style={{ padding: "15px", textAlign: "center", color: "red" }}>Are you sure you want delete your account! <br /> This action cannot be undone!</p>
+                                <p style={{ padding: "15px", textAlign: "center", color: "red" }}>Are you sure you want delete your account! <br /> All your posts will be deleted! <br /> This action cannot be undone!</p>
                                 <button onClick={togglePopup} className="btn btn-info" style={{ margin: "10px" }}>Cancel</button>
                                 <button onClick={deleteProfile} className="btn btn-danger" style={{ margin: "10px" }}>Delete</button>
                             </div>
