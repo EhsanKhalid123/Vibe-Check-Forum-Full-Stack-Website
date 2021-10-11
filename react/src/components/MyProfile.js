@@ -2,7 +2,7 @@
 import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import MessageContext from "../data/MessageContext";
-import { deleteUserDB } from "../data/repository";
+import { deletePost2, deleteUserDB } from "../data/repository";
 
 // Functional Component for MyProfile
 function MyProfile(props) {
@@ -15,13 +15,14 @@ function MyProfile(props) {
         setconfirmPopup(!confirmPopup);
     }
 
-    const deleteProfile = (event) => {
-        deleteUserDB(props.user);
-        // removePost();
+    const deleteProfile = async (event) => {
+
+        console.log(await deletePost2(props.user));
+        // await deleteUserDB(props.user);
         togglePopup();
 
         // Navigate to the home page.
-        props.logoutUser();
+        // props.logoutUser();
     }
 
     // Returns HTML elements and contents to display on page
@@ -49,8 +50,7 @@ function MyProfile(props) {
                             {/* <a href="#" className="card-link">Card link</a>*/}
                             <Link className="btn btn-info" style={{ margin: "10px" }} to="/EditProfile">Edit</Link>
                             {/* <a href="/EditProfile" className="btn btn-info" style={{ margin: "10px" }}>Edit</a> */}
-                            <Link onClick={togglePopup} className="btn btn-danger">Delete</Link>
-                            <a onClick={togglePopup} className="btn btn-danger">Delete</a>
+                            <button onClick={togglePopup} className="btn btn-danger">Delete</button>
                         </div>
                         <ul className="list-group list-group-flush">
                             <li className="list-group-item"><b style={{ color: "red" }}>Note:</b> Login details change on editing profile! Deleting your account will delete all your posts!</li>
@@ -67,8 +67,8 @@ function MyProfile(props) {
                             <h5 className="card-header bg-warning text-center" style={{ color: "white" }}><b>Confirm!</b></h5>
                             <div style={{ margin: "0 auto", textAlign: "center" }}>
                                 <p style={{ padding: "15px", textAlign: "center", color: "red" }}>Are you sure you want delete your account! <br /> This action cannot be undone!</p>
-                                <Link onClick={togglePopup} className="btn btn-info" style={{ margin: "10px" }}>Cancel</Link>
-                                <Link onClick={deleteProfile} className="btn btn-danger" style={{ margin: "10px" }}>Delete</Link>
+                                <button onClick={togglePopup} className="btn btn-info" style={{ margin: "10px" }}>Cancel</button>
+                                <button onClick={deleteProfile} className="btn btn-danger" style={{ margin: "10px" }}>Delete</button>
                             </div>
                         </div>
                     </div>

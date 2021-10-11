@@ -13,25 +13,25 @@ function Navigation(props) {
     // Navbar Code using normal HTML elements
     <nav className="navbar navbar-expand-lg navbar-light" style={{ backgroundColor: "#f0f0f0" }}>
       <div className="container">
-        <a className="navbar-brand" href="/">
+        <Link className="navbar-brand" to="/">
           <img className="navbar-brand" src={'assets/images/Vibe Check - Navbar.png'} width="150px" alt="Icon for Vibe Check" />
           {/* <img className="navbar-brand" src={process.env.PUBLIC_URL + '/favicon.png'} width="50px" /> */}
-        </a>
+        </Link>
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto">
             <li className="nav-item">
-              <a className="nav-link" href="/Home">Home</a>
+              <Link className="nav-link" to="/Home">Home</Link>
             </li>
             {props.user !== null &&
               <>
                 <li className="nav-item">
-                  <a className="nav-link" href="/MyProfile">My Profile</a>
+                  <Link className="nav-link" to="/MyProfile">My Profile</Link>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="/Forum">Forum</a>
+                  <Link className="nav-link" to="/Forum">Forum</Link>
                 </li>
               </>
             }
@@ -39,12 +39,12 @@ function Navigation(props) {
           <ul className="navbar-nav">
             {props.user === null ?
               <div className="form-inline my-2 my-lg-0">
-                <a href="/Sign-up">
+                <Link to="/Sign-up">
                   <button className="btn btn-outline-success mr-sm-2" type="submit">Sign-up</button>
-                </a>
-                <a href="/Sign-in">
+                </Link>
+                <Link to="/Sign-in">
                   <button className="btn btn-warning my-2 my-sm-0" type="submit">Sign-in</button>
-                </a>
+                </Link>
               </div>
               :
               <>
@@ -52,9 +52,9 @@ function Navigation(props) {
                   <span className="nav-link" style={{color: "Black"}}>Welcome, {props.user.username}</span>
                 </li>
                 <div className="form-inline my-2 my-lg-0">
-                  <a href="/Sign-in" onClick={props.logoutUser}>
+                  <Link to="/Sign-in" onClick={props.logoutUser}>
                     <button className="btn btn-warning my-2 my-sm-0" type="submit">Logout</button>
-                  </a>
+                  </Link>
                 </div>
               </>
             }

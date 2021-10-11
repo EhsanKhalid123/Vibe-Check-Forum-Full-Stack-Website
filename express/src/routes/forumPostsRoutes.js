@@ -8,6 +8,9 @@ module.exports = (express, app) => {
   // Deletes a post from the DB.
   router.post("/delete", controller.delete);
 
+  // Deletes a post from the DB.
+  router.post("/delete2", controller.delete2);
+
   // Create a new post.
   router.post("/create", controller.create);
 

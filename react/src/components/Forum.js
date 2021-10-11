@@ -34,16 +34,6 @@ function Forum(props) {
         setErrorMessage("");
     };
 
-    // const deletePost = async (event, userPosts) => {
-
-    //     deletePost(userPosts);
-
-    //     const currentPosts = await getPosts();
-
-    //     setPosts(currentPosts);
-    //     setIsLoading(false);
-
-    // }
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -62,6 +52,8 @@ function Forum(props) {
         // Create post.
         const newPost = { postText: trimmedPost, email: props.user.email, postDate: new Date().toLocaleString() };
         await createPost(newPost);
+
+        newPost.user.username = props.user.username;
 
         // Add post to locally stored posts.
         setPosts([...posts, newPost]);
@@ -105,12 +97,14 @@ function Forum(props) {
                     posts.map((userPosts) =>
                         <div className="posts card" >
                             <div className="card-body">
-                                <h5 style={{ float: "left", textAlign: "center" }} className="card-title">{userData.username}</h5>
+                                <h5 style={{ float: "left", textAlign: "center" }} className="card-title">{userPosts.user.username}</h5>
                                 <span style={{ float: "right", textAlign: "center", color: "#212121" }}>{new Date(userPosts.postDate).toLocaleString("en-AU", { hour12: true, hour: 'numeric', minute: 'numeric', day: "numeric", month: "short", year: "numeric" })}</span>
                                 <p style={{ margin: "0 0 10% 0" }}></p>
                                 <p style={{ clear: "both", float: "left", textAlign: "left" }} className="card-text">{userPosts.postText}</p>
-                                <button type="submit" style={{ float: "right", textAlign: "right" }} className="btn btn-danger mr-sm-2" onClick={() => {deletePost(userPosts);  setPosts("")}} >Delete</button>
-                            </div>
+                                {userPosts.email === userData.email &&
+                                <button type="submit" style={{ float: "right", textAlign: "right" }} className="btn btn-danger mr-sm-2" onClick={async () => { await deletePost(userPosts); setPosts(await getPosts()); }} >Delete</button>
+                                }
+                                </div>
                         </div>
                     )}
             <p>&nbsp;</p>

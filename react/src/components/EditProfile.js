@@ -107,9 +107,9 @@ function EditProfile(props) {
                         <p style={{ color: "red", textAlign: "center", fontSize: "18px", margin: "10px 10px 10px 10px" }}>{errors.name}</p>
                     )}
                 </div>
-                <a href="/MyProfile">
+                <Link to="/MyProfile">
                     <button type="button" className="btn btn-danger" style={{ margin: "10px", textAlign: "center" }}>Cancel</button>
-                </a>
+                </Link>
                 <button type="submit" className="btn btn-primary" style={{ margin: "10px", textAlign: "center" }}>Save</button>
 
             </form>

@@ -1,5 +1,6 @@
 // Importing React classes and functions from node modules
 import React from "react";
+import { Link } from "react-router-dom";
 
 // Functional Component for Footer Page
 function Footer() {
@@ -24,7 +25,7 @@ function Footer() {
 
             {/* Bottom Footer - Copyright Section */}
             <div className="footer-copyright text-center py-3 " style={{ backgroundColor: "#27b8cfba" }}><b>© 2021 Copyright:</b>
-                <a href="/" style={{ color: "#c30000" }}> <b>Vibe Check</b></a>
+                <Link to="/" style={{ color: "#c30000" }}> <b>Vibe Check</b></Link>
             </div>
 
         </footer>
