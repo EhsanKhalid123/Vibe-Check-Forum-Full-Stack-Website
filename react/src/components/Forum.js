@@ -20,7 +20,7 @@ function Forum(props) {
             setIsLoading(false);
         }
 
-        async function loadUserDetails(){
+        async function loadUserDetails() {
             const currentDetails = await getProfile(props.user.email);
             setUserData(currentDetails)
 
@@ -33,6 +33,17 @@ function Forum(props) {
         setPost(event.target.value);
         setErrorMessage("");
     };
+
+    // const deletePost = async (event, userPosts) => {
+
+    //     deletePost(userPosts);
+
+    //     const currentPosts = await getPosts();
+
+    //     setPosts(currentPosts);
+    //     setIsLoading(false);
+
+    // }
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -49,7 +60,7 @@ function Forum(props) {
         }
 
         // Create post.
-        const newPost = { postText: trimmedPost, email: props.user.email, postDate: new Date().toLocaleString()};
+        const newPost = { postText: trimmedPost, email: props.user.email, postDate: new Date().toLocaleString() };
         await createPost(newPost);
 
         // Add post to locally stored posts.
@@ -74,13 +85,13 @@ function Forum(props) {
             <form onSubmit={handleSubmit} >
                 <div className="form-group">
                     <h3 style={{ margin: "0 25% 10px 25%", width: "50%", textAlign: "left" }}>Create a Post:</h3>
-                    <textarea style={{ margin: "auto", width: "50%", height: "110px", border: "solid 2px #5dc7d8" }} className="form-control" id="postText" name="postText" rows="3" values={post} onChange={handleInputChange} />
+                    <textarea style={{ margin: "auto", width: "50%", height: "110px", border: "solid 2px #5dc7d8" }} className="form-control" id="postText" name="postText" rows="3" value={post} onChange={handleInputChange} />
                 </div>
                 {errorMessage && (
                     <p style={{ color: "red", textAlign: "center", fontSize: "18px", margin: "10px 10px 10px 10px" }}>{errorMessage}</p>
                 )}
-                <button type="submit" style={{ textAlign: "right", margin: "0 0 0 45%", padding: "5px 25px 5px 25px" }} className="btn btn-outline-primary mr-sm-2" >Post</button>
-                <button type="button" style={{ textAlign: "right", margin: "0 0 0 45%", padding: "5px 25px 5px 25px" }} className="btn btn-outline-danger mr-sm-2" onClick={() => { setPost(""); setErrorMessage(null); }}  >Cancel</button>
+                <button type="submit" style={{ textAlign: "right", margin: "0 0 0 40%", padding: "5px 25px 5px 25px" }} className="btn btn-outline-primary mr-sm-2" >Post</button>
+                <button type="button" style={{ textAlign: "right"}} className="btn btn-outline-danger mr-sm-2" onClick={() => { setPost(""); setErrorMessage(null); }}  >Cancel</button>
             </form>
             <p>&nbsp;</p>
             <div>
@@ -98,7 +109,7 @@ function Forum(props) {
                                 <span style={{ float: "right", textAlign: "center", color: "#212121" }}>{new Date(userPosts.postDate).toLocaleString("en-AU", { hour12: true, hour: 'numeric', minute: 'numeric', day: "numeric", month: "short", year: "numeric" })}</span>
                                 <p style={{ margin: "0 0 10% 0" }}></p>
                                 <p style={{ clear: "both", float: "left", textAlign: "left" }} className="card-text">{userPosts.postText}</p>
-                                <button type="submit" style={{ float: "right", textAlign: "right" }} className="btn btn-danger mr-sm-2" onClick={() => {deletePost(userPosts)}} >Delete</button>
+                                <button type="submit" style={{ float: "right", textAlign: "right" }} className="btn btn-danger mr-sm-2" onClick={() => {deletePost(userPosts);  setPosts("")}} >Delete</button>
                             </div>
                         </div>
                     )}

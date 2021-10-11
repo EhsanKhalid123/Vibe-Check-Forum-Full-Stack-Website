@@ -1,5 +1,6 @@
 // Importing React classes and functions from node modules
 import React from "react";
+import { Link } from "react-router-dom";
 
 // Functional Component for Navigation Bar
 function Navigation(props) {

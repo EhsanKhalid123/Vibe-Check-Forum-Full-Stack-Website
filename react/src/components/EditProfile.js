@@ -6,34 +6,12 @@ import MessageContext from "../data/MessageContext";
 
 // Functional Component for Signup Page
 function EditProfile(props) {
-    
-    // const [profile, setUserDetails] = useState({});
+
     const [values, setValues] = useState({email: props.user.email, name: props.user.name, username: props.user.username });
     const [errors, setErrors] = useState({});
     const history = useHistory();
     const { setMessage } = useContext(MessageContext);
     
-    // const userDetail = await getProfile(props.user.email);
-
-    // setUserDetails(userDetail);
-    // console.log(profile)
-
-//       // Load profile.
-//   useEffect(() => {
-//     async function loadProfile() {
-//         const userDetail = await getProfile(props.user.email);
-
-//         setUserDetails(userDetail);
-//     }
-//     loadProfile();
-//   }, [props.user.email]);
-
-//   console.log(profile);
-
-    // const [user, setUser] = useState(getProfile(props.user.email));
-    // // console.log(getProfile(props.user.email));
-    // console.log(user);
-    // console.log(user.name);
 
     // Declared constants to get from EditForm page as EditForm page returns these functions
     // Code taken from Lab Examples of Week 4 Activity 1

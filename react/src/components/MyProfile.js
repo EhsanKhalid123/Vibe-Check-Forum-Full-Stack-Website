@@ -47,8 +47,9 @@ function MyProfile(props) {
                             <h6 className="card-subtitle mb-2 text-muted">{props.user.email}</h6>
                             <p className="card-text">This is your profile information, you can choose to edit your profile or delete it!</p>
                             {/* <a href="#" className="card-link">Card link</a>*/}
-                            <Link className="btn btn-info" style={{ margin: "10px" }} to={`/EditProfile/update/${props.user.email}`}>Edit</Link>
-                            <a href={`/EditProfile/update/${props.user.email}`} className="btn btn-info" style={{ margin: "10px" }}>Edit</a>
+                            <Link className="btn btn-info" style={{ margin: "10px" }} to="/EditProfile">Edit</Link>
+                            {/* <a href="/EditProfile" className="btn btn-info" style={{ margin: "10px" }}>Edit</a> */}
+                            <Link onClick={togglePopup} className="btn btn-danger">Delete</Link>
                             <a onClick={togglePopup} className="btn btn-danger">Delete</a>
                         </div>
                         <ul className="list-group list-group-flush">
@@ -66,8 +67,8 @@ function MyProfile(props) {
                             <h5 className="card-header bg-warning text-center" style={{ color: "white" }}><b>Confirm!</b></h5>
                             <div style={{ margin: "0 auto", textAlign: "center" }}>
                                 <p style={{ padding: "15px", textAlign: "center", color: "red" }}>Are you sure you want delete your account! <br /> This action cannot be undone!</p>
-                                <a onClick={togglePopup} className="btn btn-info" style={{ margin: "10px" }}>Cancel</a>
-                                <a onClick={deleteProfile} className="btn btn-danger" style={{ margin: "10px" }}>Delete</a>
+                                <Link onClick={togglePopup} className="btn btn-info" style={{ margin: "10px" }}>Cancel</Link>
+                                <Link onClick={deleteProfile} className="btn btn-danger" style={{ margin: "10px" }}>Delete</Link>
                             </div>
                         </div>
                     </div>

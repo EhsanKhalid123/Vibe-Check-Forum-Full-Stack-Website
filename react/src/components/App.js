@@ -54,7 +54,7 @@ function App() {
               </Route>
             }
             {user !== null &&
-              <Route path="/EditProfile/update/:email" render={props => (
+              <Route path="/EditProfile" render={props => (
                 <EditProfile {...props} user={user} loginUser={loginUser} logoutUser={logoutUser} />
               )} />
             }
