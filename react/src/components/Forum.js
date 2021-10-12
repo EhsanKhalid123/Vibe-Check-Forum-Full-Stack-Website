@@ -13,10 +13,8 @@ function Forum(props) {
     const [confirmPopup, setconfirmPopup] = useState(false);
 
     // Popup Toggle Switch Function
-    const togglePopup = (postID) => {
-        if (postID === 73) {
-            setconfirmPopup(!confirmPopup);
-        }
+    const togglePopup = () => {
+        setconfirmPopup(!confirmPopup);
     }
 
     // Load posts.
@@ -112,8 +110,10 @@ function Forum(props) {
                                     <p style={{ clear: "both", float: "left", textAlign: "left" }} className="card-text">{userPosts.postText}</p>
                                     {userPosts.email === userData.email &&
                                         <div>
-                                            <button type="submit" style={{ float: "right", textAlign: "right" }} className="btn btn-danger mr-sm-2" onClick={async () => { await deletePost(userPosts); setPosts(await getPosts()); }} >Delete</button>
-                                            <button style={{ float: "right", textAlign: "right" }} className="btn btn-dark mr-sm-2" onClick={togglePopup(userPosts.forumPosts_id)} >Reply</button>
+                                            <div>
+                                                <button type="submit" style={{ float: "right", textAlign: "right" }} className="btn btn-danger mr-sm-2" onClick={async () => { await deletePost(userPosts); setPosts(await getPosts()); }} >Delete</button>
+                                                <button style={{ float: "right", textAlign: "right" }} className="btn btn-dark mr-sm-2" onClick={togglePopup} >Reply</button>
+                                            </div>
                                         </div>
                                     }
                                 </div>
