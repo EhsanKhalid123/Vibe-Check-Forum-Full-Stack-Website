@@ -28,6 +28,7 @@ db.replyPosts = require("./models/replyPosts.js")(db.sequelize, DataTypes);
 // Relating Posts table to the Users table with a foreign key.
 db.forumPosts.belongsTo(db.users, { foreignKey: { name: "email", allowNull: false } });
 db.replyPosts.belongsTo(db.forumPosts, { foreignKey: { name: "forumPosts_id", allowNull: false } });
+db.replyPosts.belongsTo(db.users, { foreignKey: { name: "email", allowNull: false } });
 
 // Include a sync option with seed data logic included.
 db.sync = async () => {

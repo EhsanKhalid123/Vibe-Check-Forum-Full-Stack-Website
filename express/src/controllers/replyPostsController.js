@@ -13,7 +13,8 @@ exports.all = async (req, res) => {
 exports.create = async (req, res) => {
   const post = await db.replyPosts.create({
     replyText: req.body.replyText,
-    forumPosts_id: req.body.forumPosts_id
+    forumPosts_id: req.body.forumPosts_id,
+    email: req.body.email
   });
 
   res.json(post);

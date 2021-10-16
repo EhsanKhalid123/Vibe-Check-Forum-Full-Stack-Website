@@ -17,13 +17,9 @@ function Forum(props) {
     const togglePopup = async (id) => {
 
         setSelectedId(id);
-        if (id === selectedId) 
+        if (id === selectedId)
             setconfirmPopup(!confirmPopup);
     }
-
-    const handleSelect = (id) => {
-        
-    };
 
     // Load posts.
     useEffect(() => {
@@ -77,7 +73,7 @@ function Forum(props) {
         setErrorMessage("");
     };
 
-    const handleSubmitReply = async (event, postId) => {
+    const handleSubmitReply = async (event) => {
         event.preventDefault();
 
         // Trim the post text.
@@ -92,7 +88,7 @@ function Forum(props) {
         }
 
         // Create post.
-        const newPost = { replyText: trimmedPost, forumPosts_id: postId, replyDate: new Date().toLocaleString() };
+        const newPost = { replyText: trimmedPost, email: props.user.email, forumPosts_id: selectedId, replyDate: new Date().toLocaleString() };
         await createReplyPost(newPost);
 
         newPost.user = { username: props.user.username };
@@ -103,6 +99,7 @@ function Forum(props) {
         // Reset post content.
         setPost("");
         setErrorMessage("");
+        setconfirmPopup(false);
     };
 
     // Returns HTML elements and content to display on the pages
@@ -131,7 +128,9 @@ function Forum(props) {
             <div>
             </div>
             {isLoading ?
-                <div>Loading posts...</div>
+                <div>Loading posts...
+                    <p>&nbsp;</p>
+                </div>
                 :
                 posts.length === 0 ?
                     <span className="text-muted">No posts have been submitted.</span>
@@ -162,7 +161,7 @@ function Forum(props) {
                                         <p>&nbsp;</p>
                                         {selectedId === userPosts.forumPosts_id &&
                                             <div>
-                                                <form onSubmit={handleSubmitReply(userPosts.forumPosts_id)} >
+                                                <form onSubmit={handleSubmitReply} >
                                                     <div className="form-group">
                                                         <h5 style={{ margin: "10px 25% 10px 25%", width: "50%", textAlign: "left" }}>Reply to a post:</h5>
                                                         <textarea style={{ margin: "auto", width: "50%", height: "110px", border: "solid 2px #5dc7d8" }} className="form-control" id="postText" name="postText" rows="3" value={post} onChange={handleInputChange} />
