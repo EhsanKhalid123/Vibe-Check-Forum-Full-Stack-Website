@@ -76,6 +76,14 @@ async function deletePost2(email) {
   return response.data;
 }
 
+// --- Reply Post ---------------------------------------------------------------------------------------
+
+async function createReplyPost(post) {
+  const response = await axios.post(API_HOST + "/VCApi/replyPosts/create", post);
+
+  return response.data;
+}
+
 // --- Helper functions to interact with local storage --------------------------------------------
 function setUser(user) {
   localStorage.setItem(USER_KEY, JSON.stringify(user));
@@ -93,5 +101,6 @@ export {
   verifyUser, findUser, createUser,
   getPosts, createPost, deletePost,
   getUser, removeUser, deleteUserDB,
-  getProfile, updateUser, setUser, deletePost2
+  getProfile, updateUser, setUser, deletePost2,
+  createReplyPost,
 }

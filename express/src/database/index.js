@@ -22,10 +22,12 @@ db.sequelize = new Sequelize(config.DB, config.USER, config.PASSWORD, {
 // Importing database tables/models to create and use.
 db.users = require("./models/users.js")(db.sequelize, DataTypes);
 db.forumPosts = require("./models/forumPosts.js")(db.sequelize, DataTypes);
+db.replyPosts = require("./models/replyPosts.js")(db.sequelize, DataTypes);
 
 // Relate post and user through foreign key.
 // Relating Posts table to the Users table with a foreign key.
 db.forumPosts.belongsTo(db.users, { foreignKey: { name: "email", allowNull: false } });
+db.replyPosts.belongsTo(db.forumPosts, { foreignKey: { name: "forumPosts_id", allowNull: false } });
 
 // Include a sync option with seed data logic included.
 db.sync = async () => {

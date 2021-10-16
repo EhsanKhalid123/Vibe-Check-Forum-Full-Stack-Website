@@ -1,6 +1,6 @@
 // Importing React classes and functions from node modules
 import React, { useState, useEffect } from "react";
-import { getPosts, createPost, getProfile, deletePost } from "../data/repository";
+import { getPosts, createPost, getProfile, deletePost, createReplyPost } from "../data/repository";
 
 // Functional Component for Forum Page
 function Forum(props) {
@@ -11,11 +11,19 @@ function Forum(props) {
     const [posts, setPosts] = useState([]);
     const [userData, setUserData] = useState([]);
     const [confirmPopup, setconfirmPopup] = useState(false);
+    const [selectedId, setSelectedId] = useState(null);
 
     // Popup Toggle Switch Function
-    const togglePopup = () => {
-        setconfirmPopup(!confirmPopup);
+    const togglePopup = async (id) => {
+
+        setSelectedId(id);
+        if (id === selectedId) 
+            setconfirmPopup(!confirmPopup);
     }
+
+    const handleSelect = (id) => {
+        
+    };
 
     // Load posts.
     useEffect(() => {
@@ -58,6 +66,34 @@ function Forum(props) {
         // Create post.
         const newPost = { postText: trimmedPost, email: props.user.email, postDate: new Date().toLocaleString() };
         await createPost(newPost);
+
+        newPost.user = { username: props.user.username };
+
+        // Add post to locally stored posts.
+        setPosts([...posts, newPost]);
+
+        // Reset post content.
+        setPost("");
+        setErrorMessage("");
+    };
+
+    const handleSubmitReply = async (event, postId) => {
+        event.preventDefault();
+
+        // Trim the post text.
+        const trimmedPost = post.trim();
+
+        if (trimmedPost === "") {
+            setErrorMessage("A post cannot be empty!");
+            return;
+        } else if (trimmedPost.length > 600) {
+            setErrorMessage("A post cannot be greater than 600 characters!");
+            return;
+        }
+
+        // Create post.
+        const newPost = { replyText: trimmedPost, forumPosts_id: postId, replyDate: new Date().toLocaleString() };
+        await createReplyPost(newPost);
 
         newPost.user = { username: props.user.username };
 
@@ -112,7 +148,7 @@ function Forum(props) {
                                         <div>
                                             <div>
                                                 <button type="submit" style={{ float: "right", textAlign: "right" }} className="btn btn-danger mr-sm-2" onClick={async () => { await deletePost(userPosts); setPosts(await getPosts()); }} >Delete</button>
-                                                <button style={{ float: "right", textAlign: "right" }} className="btn btn-dark mr-sm-2" onClick={togglePopup} >Reply</button>
+                                                <button style={{ float: "right", textAlign: "right" }} className="btn btn-dark mr-sm-2" onClick={() => togglePopup(userPosts.forumPosts_id)} >Reply</button>
                                             </div>
                                         </div>
                                     }
@@ -122,17 +158,24 @@ function Forum(props) {
                                 {confirmPopup === false ?
                                     <div><p>&nbsp;</p></div>
                                     :
-                                    confirmPopup && userPosts.forumPosts_id &&
                                     <div>
-                                        <div className="form-group">
-                                            <h5 style={{ margin: "10px 25% 10px 25%", width: "50%", textAlign: "left" }}>Reply to a post:</h5>
-                                            <textarea style={{ margin: "auto", width: "50%", height: "110px", border: "solid 2px #5dc7d8" }} className="form-control" id="postText" name="postText" rows="3" value={post} onChange={handleInputChange} />
-                                        </div>
-                                        <button type="submit" style={{ textAlign: "right", margin: "0 0 0 40%", padding: "5px 25px 5px 25px" }} className="btn btn-outline-primary mr-sm-2" >Post</button>
-                                        <button type="button" style={{ textAlign: "right" }} className="btn btn-outline-danger mr-sm-2" onClick={() => { setPost(""); setErrorMessage(null); togglePopup(); }}  >Cancel</button>
                                         <p>&nbsp;</p>
+                                        {selectedId === userPosts.forumPosts_id &&
+                                            <div>
+                                                <form onSubmit={handleSubmitReply(userPosts.forumPosts_id)} >
+                                                    <div className="form-group">
+                                                        <h5 style={{ margin: "10px 25% 10px 25%", width: "50%", textAlign: "left" }}>Reply to a post:</h5>
+                                                        <textarea style={{ margin: "auto", width: "50%", height: "110px", border: "solid 2px #5dc7d8" }} className="form-control" id="postText" name="postText" rows="3" value={post} onChange={handleInputChange} />
+                                                    </div>
+                                                    <button type="submit" style={{ textAlign: "right", margin: "0 0 0 40%", padding: "5px 25px 5px 25px" }} className="btn btn-outline-primary mr-sm-2" >Post</button>
+                                                    <button type="button" style={{ textAlign: "right" }} className="btn btn-outline-danger mr-sm-2" onClick={() => { setPost(""); setErrorMessage(null); togglePopup(); }}  >Cancel</button>
+                                                    <p>&nbsp;</p>
+                                                </form>
+                                            </div>
+                                        }
                                     </div>
                                 }
+
                             </div>
                         </div>
                     )}
