@@ -14,6 +14,7 @@ import MyProfile from "./MyProfile";
 import EditProfile from './EditProfile';
 import Forum from './Forum';
 import MessageContext from "../data/MessageContext";
+import Friends from "../components/Friends";
 
 function App() {
 
@@ -48,6 +49,11 @@ function App() {
           <Header />
           <Navigation user={user} logoutUser={logoutUser} />
           <Switch>
+          {user !== null &&
+              <Route path="/Friends">
+                <Friends user={user} loginUser={loginUser} logoutUser={logoutUser} />
+              </Route>
+            }
             {user !== null &&
               <Route path="/Forum">
                 <Forum user={user} loginUser={loginUser} logoutUser={logoutUser} />
