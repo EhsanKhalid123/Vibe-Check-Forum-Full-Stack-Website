@@ -35,7 +35,7 @@ function Navigation(props) {
                   <Link className="nav-link" to="/Forum">Forum</Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/Friends">Friends</Link>
+                  <Link className="nav-link" to="/Friends">Follow/Friends</Link>
                 </li>
               </>
             }

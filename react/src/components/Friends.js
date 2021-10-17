@@ -34,7 +34,9 @@ function Friends(props) {
         <div>
             <div className="text-center">
                 <p>&nbsp;</p>
-                <h1 className="home-welcome display-4">Friends</h1>
+                <h1 className="home-welcome display-4">Follow/Friends</h1>
+                <h6>Below are all the users on this website, You can choose to follow/add them as friends!</h6>
+                <p>&nbsp;</p>
 
                 {/* Table showing all users in the DB */}
                 <table className="table table-striped">
