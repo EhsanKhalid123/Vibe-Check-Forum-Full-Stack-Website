@@ -84,6 +84,18 @@ async function createReplyPost(post) {
   return response.data;
 }
 
+async function getReplyPosts() {
+  const response = await axios.get(API_HOST + "/VCApi/replyPosts");
+
+  return response.data;
+}
+
+async function deleteReplyPost2(forumPosts_id) {
+  const response = await axios.post(API_HOST + "/VCApi/replyPosts/delete2", forumPosts_id);
+
+  return response.data;
+}
+
 // --- Helper functions to interact with local storage --------------------------------------------
 function setUser(user) {
   localStorage.setItem(USER_KEY, JSON.stringify(user));
@@ -102,5 +114,5 @@ export {
   getPosts, createPost, deletePost,
   getUser, removeUser, deleteUserDB,
   getProfile, updateUser, setUser, deletePost2,
-  createReplyPost,
+  createReplyPost, getReplyPosts, deleteReplyPost2
 }

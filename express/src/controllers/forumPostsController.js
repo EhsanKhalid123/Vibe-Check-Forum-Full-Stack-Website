@@ -52,3 +52,4 @@ exports.delete2 = async (req, res) => {
 
   return res.json(post);
 };
+

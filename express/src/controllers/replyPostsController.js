@@ -3,8 +3,8 @@ const db = require("../database");
 
 // Endpoint for selecting all posts from the database.
 exports.all = async (req, res) => {
-  const posts = await db.replyPosts.findAll({include: {model: db.forumPosts, as: "forumPostsID"} });
-  
+    // const posts = await db.replyPosts.findAll();
+  const posts = await db.replyPosts.findAll({include: {model: db.forumPosts, as: "forumPostsID"} && {model: db.users, as: "users"} });
   res.json(posts);
 };
 
@@ -35,21 +35,14 @@ exports.delete = async (req, res) => {
   return res.json(removed);
 };
 
-// Remove a specific users posts from the database.
+// Remove a specific posts reply Post from the database.
 exports.delete2 = async (req, res) => {
-  const replyPosts_id = req.body.replyPosts_id;
-
-  let removed = false;
-
-  // const post = await db.forumPosts.findAll({where: { email: email }});
-
-  // // if(post !== null) {
-  //   await post.destroy();
-  //   removed = true;
-  // }
-
-  const post = await db.replyPosts.destroy({where: { replyPosts_id: replyPosts_id }});
-
-
-  return res.json(post);
-};
+    const forumPosts_id = req.body.forumPosts_id;
+  
+    let removed = false;
+  
+    const post = await db.replyPosts.destroy({where: { forumPosts_id: forumPosts_id }});
+  
+  
+    return res.json(post);
+  };
