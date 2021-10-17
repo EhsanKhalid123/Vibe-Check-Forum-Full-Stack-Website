@@ -8,8 +8,14 @@ const db = require("../database");
 
 // Endpoint for selecting all posts from the database.
 exports.all = async (req, res) => {
-    const posts = await db.replyPosts.findAll();
-    //   const posts = await db.replyPosts.findAll({include: {model: db.forumPosts, as: "forumPostsID"} && {model: db.users, as: "users"} });
+    // const posts = await db.replyPosts.findAll();
+    // const posts = await db.replyPosts.findAll({include: {model: db.forumPosts, as: "forumPostsID"} && {model: db.users, as: "users"} });
+
+    const posts = await db.replyPosts.findAll({
+        include: [{ model: db.forumPosts, as: "forumPost" }, { model: db.users, as: "user" }]
+    });
+
+
     res.json(posts);
 };
 

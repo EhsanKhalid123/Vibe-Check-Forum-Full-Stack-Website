@@ -89,11 +89,12 @@ function Forum(props) {
 
         newPost.user = { username: props.user.username };
 
-        getPosts();
-        getReplyPosts();
-        // Add post to locally stored posts.
-        setPosts([...posts, newPost]);
-        setReplyPosts([...replyPosts, newPost]);
+        // Update Page/Refresh the Data
+        const currentPosts = await getPosts();
+        setPosts(currentPosts);
+
+        // Add post to locally stored posts. Below Commented out code locally stores state and not refreshes data like above code does.
+        // setPosts([...posts, newPost]);
 
         // Reset post content.
         setPost("");
@@ -123,11 +124,12 @@ function Forum(props) {
 
         newPost.user = { username: props.user.username };
 
-        // Add post to locally stored posts.
-        getPosts();
-        getReplyPosts();
-        setPosts([...posts, newPost]);
-        setReplyPosts([...replyPosts, newPost]);
+        // Update Page/Refresh the Data
+        const currentReplyPosts = await getReplyPosts();
+        setReplyPosts(currentReplyPosts);
+
+        // Add post to locally stored posts. Below Commented out code locally stores state and not refreshes data like above code does.
+        // setReplyPosts([...replyPosts, newPost]);
 
         // Reset post content.
         setPost("");
@@ -187,7 +189,7 @@ function Forum(props) {
                                         <div>
                                             {/* Only Display the following Elements if the email of the post matches the logged in user */}
                                             {userPosts.email === userData.email &&
-                                                <button type="submit" style={{ float: "right", textAlign: "right" }} className="btn btn-danger mr-sm-2" onClick={async () => { await deleteReplyPost2(userPosts.forumPosts_id); await deletePost(userPosts); setPosts(await getPosts(), await getReplyPosts()); }} >Delete</button>
+                                                <button type="submit" style={{ float: "right", textAlign: "right" }} className="btn btn-danger mr-sm-2" onClick={async () => { await deleteReplyPost2(userPosts); await deletePost(userPosts); setPosts(await getPosts(), await getReplyPosts()); }} >Delete</button>
                                             }
                                             <button style={{ float: "right", textAlign: "right" }} className="btn btn-dark mr-sm-2" onClick={() => togglePopup(userPosts.forumPosts_id)} >Reply</button>
                                         </div>
@@ -221,10 +223,10 @@ function Forum(props) {
                             </div>
                             {/* Shows Replied Posts underneath the Original Post */}
                             {replyPosts.map((replyPosts) =>
-                             replyPosts.forumPosts_id === userPosts.forumPosts_id &&
-                                <div className="posts card" style={{width: "45%"}} >
+                                replyPosts.forumPosts_id === userPosts.forumPosts_id &&
+                                <div className="posts card" style={{ width: "45%" }} >
                                     <div className="card-body">
-                                        <h5 style={{ float: "left", textAlign: "center" }} className="card-title">{replyPosts.email} <span style={{fontSize: "11px"}}>- Replied Post</span></h5>
+                                        <h5 style={{ float: "left", textAlign: "center" }} className="card-title">{replyPosts.user.username} <span style={{ fontSize: "11px" }}>- Replied Post</span></h5>
                                         <span style={{ float: "right", textAlign: "center", color: "#212121" }}>{new Date(replyPosts.replyDate).toLocaleString("en-AU", { hour12: true, hour: 'numeric', minute: 'numeric', day: "numeric", month: "short", year: "numeric" })}</span>
                                         <p style={{ margin: "0 0 10% 0" }}></p>
                                         <p style={{ clear: "both", float: "left", textAlign: "left" }} className="card-text">{replyPosts.replyText}</p>
@@ -233,7 +235,7 @@ function Forum(props) {
                                             <div>
                                                 {/* Only Display the following Elements if the email of the post matches the logged in user */}
                                                 {replyPosts.email === userData.email &&
-                                                    <button type="submit" style={{ float: "right", textAlign: "right" }} className="btn btn-danger mr-sm-2" onClick={async () => { await deleteReplyPost(replyPosts); setPosts(await getPosts(), await getReplyPosts()); }} >Delete</button>
+                                                    <button type="submit" style={{ float: "right", textAlign: "right" }} className="btn btn-danger mr-sm-2" onClick={async () => { await deleteReplyPost(replyPosts); setPosts(await getPosts()); setReplyPosts(await getReplyPosts()); }} >Delete</button>
                                                 }
                                             </div>
                                         </div>
