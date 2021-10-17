@@ -1,4 +1,10 @@
+
+/* REFERENCE:
+   Some of the Code below is taken & adapted from Lab Examples of Week 8 and 9. 
+*/
+
 module.exports = (express, app) => {
+  // Importing libraries and files
   const controller = require("../controllers/forumPostsController.js");
   const router = express.Router();
 
@@ -8,7 +14,7 @@ module.exports = (express, app) => {
   // Deletes a post from the DB.
   router.post("/delete", controller.delete);
 
-  // Deletes a post from the DB.
+  // Deletes all posts of a specific user from DB.
   router.post("/delete2", controller.delete2);
 
   // Create a new post.

@@ -25,6 +25,7 @@ function Navigation(props) {
             <li className="nav-item">
               <Link className="nav-link" to="/Home">Home</Link>
             </li>
+            {/* The following links only appear if user is logged in */}
             {props.user !== null &&
               <>
                 <li className="nav-item">
@@ -40,6 +41,7 @@ function Navigation(props) {
             }
           </ul>
           <ul className="navbar-nav">
+            {/* Button Display changes according to if user is logged in or not */}
             {props.user === null ?
               <div className="form-inline my-2 my-lg-0">
                 <Link to="/Sign-up">
@@ -52,7 +54,7 @@ function Navigation(props) {
               :
               <>
                 <li className="nav-item">
-                  <span className="nav-link" style={{color: "Black"}}>Welcome, {props.user.username}</span>
+                  <span className="nav-link" style={{ color: "Black" }}>Welcome, {props.user.username}</span>
                 </li>
                 <div className="form-inline my-2 my-lg-0">
                   <Link to="/Sign-in" onClick={props.logoutUser}>

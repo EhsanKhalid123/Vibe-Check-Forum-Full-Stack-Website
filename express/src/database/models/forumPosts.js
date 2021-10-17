@@ -1,3 +1,8 @@
+
+/* REFERENCE:
+   Some of the Code below is taken & adapted from Lab Examples of Week 8 and 9. 
+*/
+
 const { Sequelize } = require("sequelize");
 
 // Creating a Sequelize instance and Table.

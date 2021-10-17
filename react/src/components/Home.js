@@ -7,6 +7,7 @@ import MessageContext from "../data/MessageContext";
 // Functional Component for the Home page
 function Home(props) {
 
+    // useContext Hook declared for showing message
     const { message } = useContext(MessageContext);
 
     // Returns HTML elements to display content on pages
@@ -14,6 +15,7 @@ function Home(props) {
 
         // Contents of the main page uses basic HTML elements
         <div className="text-center">
+            {/* Message being shown here which was passed through App. */}
             {message && props.user !== null && <div className="alert alert-success" style={{ margin: "20px" }} role="alert">{message}</div>}
             <p>&nbsp;</p>
             <h1 className="home-welcome display-4">Welcome to Vibe Check</h1>

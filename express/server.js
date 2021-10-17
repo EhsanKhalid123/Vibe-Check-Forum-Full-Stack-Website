@@ -19,11 +19,12 @@ app.use(express.json());
 app.use(cors());
 
 // Simple Hello World route.
-// Endpoint added in this page.
+// Sample Endpoint added in this page.
 app.get("/", (req, res) => {
   res.json({ message: "Hello World!" });
 });
 
+// Sample Endpoint
 app.get("/users", async (req, res) => {
   const users = await db.users.findAll();
   res.json(users);

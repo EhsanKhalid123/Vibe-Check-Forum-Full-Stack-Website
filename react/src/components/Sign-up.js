@@ -1,6 +1,10 @@
+
+/* REFERENCE:
+   Some of the Code below is taken & adapted from Lab Examples of Week 8 and 9. 
+*/
+
 // Importing React classes and functions from node modules
 import React, { useState, useContext } from "react";
-import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { findUser, createUser, setUser } from "../data/repository";
 import MessageContext from "../data/MessageContext";
@@ -8,6 +12,7 @@ import MessageContext from "../data/MessageContext";
 // Functional Component for Signup Page
 function Sign_up(props) {
 
+    // State Variables Declaration for useState and useContext Hooks
     const history = useHistory();
     const [values, setValues] = useState({ name: "", username: "", email: "", password: "" });
     const [errors, setErrors] = useState({});
@@ -18,6 +23,7 @@ function Sign_up(props) {
         setValues({ ...values, [event.target.name]: event.target.value });
     };
 
+    // Handler for form Submission
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -45,10 +51,12 @@ function Sign_up(props) {
         history.push("/");
     };
 
+    // Handler for Validating SignUp Input Fields
     const handleValidation = async () => {
         const trimmedValues = trimFields();
         const formErrors = {};
 
+        // Validation for Name Field
         let key = "name";
         let value = trimmedValues[key];
         if (value.length === 0)
@@ -56,6 +64,7 @@ function Sign_up(props) {
         else if (value.length > 40)
             formErrors[key] = "Name length cannot be greater than 40.";
 
+        // Validation for Username Field
         key = "username";
         value = trimmedValues[key];
         if (value.length === 0)
@@ -63,6 +72,7 @@ function Sign_up(props) {
         else if (value.length > 32)
             formErrors[key] = "Username length cannot be greater than 32.";
 
+        // Validation for Email Field
         key = "email";
         value = trimmedValues[key];
         if (value.length === 0)
@@ -74,6 +84,7 @@ function Sign_up(props) {
         else if (await findUser(trimmedValues.email) !== null)
             formErrors[key] = "Email is already registered.";
 
+        // Validation for Password Field
         key = "password";
         value = trimmedValues[key];
         if (value.length === 0)
@@ -83,11 +94,13 @@ function Sign_up(props) {
         else if (!/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)[^ ]{6,}/.test(value))
             formErrors[key] = "Password must meet requirements!";
 
+        // Sets Errors If any Validation Fails
         setErrors(formErrors);
 
         return { trimmedValues, isValid: Object.keys(formErrors).length === 0 };
     };
 
+    // Trim Fields Function to trim all spaces from the trimmedValues constant recieved from other function.
     const trimFields = () => {
         const trimmedValues = {};
         Object.keys(values).map(key => trimmedValues[key] = values[key].trim());
@@ -108,6 +121,7 @@ function Sign_up(props) {
             <hr style={{ width: "50%", marginBottom: "20px", borderWidth: "1px", backgroundColor: "#5dc7d8" }} />
             <p>&nbsp;</p>
             <form className="sign-up-form" onSubmit={handleSubmit} noValidate>
+                {/* Name Field */}
                 <div className="form-group">
                     <label htmlFor="name"><b>Name:</b></label>
                     <input type="text" className="form-control" id="name" name="name" placeholder="Please enter your name" value={values.name} onChange={handleInputChange} required />
@@ -115,6 +129,7 @@ function Sign_up(props) {
                         <p style={{ color: "red", textAlign: "center", fontSize: "18px", margin: "10px 10px 10px 10px" }}>{errors.name}</p>
                     )}
                 </div>
+                {/* Username Field */}
                 <div className="form-group">
                     <label htmlFor="name"><b>Username:</b></label>
                     <input type="text" className="form-control" id="username" name="username" placeholder="Please enter your username" value={values.username} onChange={handleInputChange} required />
@@ -122,6 +137,7 @@ function Sign_up(props) {
                         <p style={{ color: "red", textAlign: "center", fontSize: "18px", margin: "10px 10px 10px 10px" }}>{errors.username}</p>
                     )}
                 </div>
+                {/* Email Field */}
                 <div className="form-group">
                     <label htmlFor="email"><b>Email:</b></label>
                     <input type="email" className="form-control" id="email" name="email" placeholder="Please enter your email" value={values.email} onChange={handleInputChange} required />
@@ -129,6 +145,7 @@ function Sign_up(props) {
                         <p style={{ color: "red", textAlign: "center", fontSize: "18px", margin: "10px 10px 10px 10px" }}>{errors.email}</p>
                     )}
                 </div>
+                {/* Password Field */}
                 <div className="form-group">
                     <label htmlFor="password"><b>Password:</b></label>
                     <input type="password" className="form-control" id="password" name="password" placeholder="Please enter a Password" value={values.password} onChange={handleInputChange} required />

@@ -1,3 +1,8 @@
+
+/* REFERENCE:
+   Some of the Code below is taken & adapted from Lab Examples of Week 8 and 9. 
+*/
+
 // Importing React classes and functions from node modules
 import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
@@ -15,6 +20,7 @@ function MyProfile(props) {
         setconfirmPopup(!confirmPopup);
     }
 
+    // Delete Profile Function Removes user from Database
     const deleteProfile = async (event) => {
 
         await deletePost2(props.user);
@@ -33,6 +39,7 @@ function MyProfile(props) {
         // https://getbootstrap.com/docs/4.0/components/card/
 
         <div>
+            {/* Shows Message passed down from App component for useContext Hook */}
             {message && <div className="alert alert-success text-center" style={{ margin: "20px" }} role="alert">{message}</div>}
             <div className="profile-card">
                 <div className="text-center">
@@ -62,6 +69,7 @@ function MyProfile(props) {
             </div>
 
             <div>
+                {/* Popup box only opens if state variable is set to true for deleting account */}
                 {confirmPopup &&
                     <div className="popup-box">
                         <div className="box">

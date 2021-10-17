@@ -1,3 +1,8 @@
+
+/* REFERENCE:
+   Some of the Code below is taken & adapted from Lab Examples of Week 8 and 9. 
+*/
+
 // ORM Related Code Goes in This File.
 
 // Import Sequelize Library and its Components.
@@ -27,7 +32,9 @@ db.replyPosts = require("./models/replyPosts.js")(db.sequelize, DataTypes);
 // Relate post and user through foreign key.
 // Relating Posts table to the Users table with a foreign key.
 db.forumPosts.belongsTo(db.users, { foreignKey: { name: "email", allowNull: false } });
+// Relating Reply Posts table to the Forum posts table with a foreign key.
 db.replyPosts.belongsTo(db.forumPosts, { foreignKey: { name: "forumPosts_id", allowNull: false } });
+// Relating Reply Posts table to the Users table with a foreign key.
 db.replyPosts.belongsTo(db.users, { foreignKey: { name: "email", allowNull: false } });
 
 // Include a sync option with seed data logic included.
@@ -44,6 +51,7 @@ db.sync = async () => {
     await addData();
 };
 
+// Function to add Data in to DB if not already added.
 async function addData() {
     // Variable Constant Declared = Counts the users tables data.
     const userCount = await db.users.count();
@@ -59,7 +67,7 @@ async function addData() {
 
     // Sample User data to add into the database user table.
     let hashedPassword = await argon2.hash("abc123", { type: argon2.argon2id });
-    await db.users.create({ email: "test@test.com", username: "TestAcc", hashed_password: hashedPassword, name: "Test"});
+    await db.users.create({ email: "test@test.com", username: "TestAcc", hashed_password: hashedPassword, name: "Test" });
 
 }
 

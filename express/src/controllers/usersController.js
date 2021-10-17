@@ -1,8 +1,14 @@
+
+/* REFERENCE:
+   Some of the Code below is taken & adapted from Lab Examples of Week 8 and 9. 
+*/
+
+// Old fashioned Import statements for libraries and files
 const db = require("../database");
 const argon2 = require("argon2");
 const Sequelize = require("sequelize");
 
-// Select all users from the database.
+// Endpoint for Select all users from the database.
 exports.all = async (req, res) => {
   const users = await db.users.findAll();
 
@@ -38,6 +44,7 @@ exports.login = async (req, res) => {
 exports.create = async (req, res) => {
   const hash = await argon2.hash(req.body.password, { type: argon2.argon2id });
 
+  // Following properties are required for user to be created in DB
   const user = await db.users.create({
     email: req.body.email,
     username: req.body.username,
@@ -48,7 +55,7 @@ exports.create = async (req, res) => {
   res.json(user);
 };
 
-// Update a user in the database.
+// Update user Details in the database.
 exports.update = async (req, res) => {
   const email = req.params.email;
 
@@ -69,7 +76,7 @@ exports.delete = async (req, res) => {
   let removed = false;
 
   const user = await db.users.findByPk(email);
-  if(user !== null) {
+  if (user !== null) {
     await user.destroy();
     removed = true;
   }

@@ -1,4 +1,10 @@
+
+/* REFERENCE:
+   Some of the Code below is taken & adapted from Lab Examples of Week 8 and 9. 
+*/
+
 module.exports = (express, app) => {
+  // Importing libraries and files
   const controller = require("../controllers/usersController.js");
   const router = express.Router();
 
