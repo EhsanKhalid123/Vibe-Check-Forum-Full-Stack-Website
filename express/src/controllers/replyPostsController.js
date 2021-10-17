@@ -57,3 +57,15 @@ exports.delete2 = async (req, res) => {
 
     return res.json(post);
 };
+
+// Remove a specific posts, reply Post from the database.
+exports.delete3 = async (req, res) => {
+    const email = req.body.email;
+
+    let removed = false;
+
+    const post = await db.replyPosts.destroy({ where: { email: email } });
+
+
+    return res.json(post);
+};

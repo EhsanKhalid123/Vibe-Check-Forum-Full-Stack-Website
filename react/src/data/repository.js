@@ -128,6 +128,13 @@ async function deleteReplyPost2(forumPosts_id) {
   return response.data;
 }
 
+// Delete all posts associated with original post and the user Request For API from DB
+async function deleteReplyPost3(post) {
+  const response = await axios.post(API_HOST + "/VCApi/replyPosts/delete3", post);
+
+  return response.data;
+}
+
 // --- Helper functions to interact with local storage --------------------------------------------
 // Sets Current User In Local Storage
 function setUser(user) {
@@ -151,5 +158,5 @@ export {
   getUser, removeUser, deleteUserDB,
   getProfile, updateUser, setUser, deletePost2,
   createReplyPost, getReplyPosts, deleteReplyPost2,
-  getProfileUsers, deleteReplyPost
+  getProfileUsers, deleteReplyPost, deleteReplyPost3
 }

@@ -17,6 +17,9 @@ module.exports = (express, app) => {
     // Deletes all Replied post from the DB for a specific Post ID.
     router.post("/delete2", controller.delete2);
 
+    // Deletes all Replied post for the user being deleted from the DB for a specific Post ID.
+    router.post("/delete3", controller.delete3);
+
     // Create a Reply to a post.
     router.post("/create", controller.create);
 

@@ -7,7 +7,7 @@
 import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import MessageContext from "../data/MessageContext";
-import { deletePost2, deleteUserDB } from "../data/repository";
+import { deletePost2, deleteReplyPost3, deleteUserDB } from "../data/repository";
 
 // Functional Component for MyProfile
 function MyProfile(props) {
@@ -23,6 +23,7 @@ function MyProfile(props) {
     // Delete Profile Function Removes user from Database
     const deleteProfile = async (event) => {
 
+        await deleteReplyPost3(props.user);
         await deletePost2(props.user);
         await deleteUserDB(props.user);
 
