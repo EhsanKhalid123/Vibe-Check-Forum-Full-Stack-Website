@@ -2,8 +2,8 @@
 
 # dependencies
 express/node_modules
-express/src/database/config.js
 react/node_modules
+express/src/database/config.js
 /.pnp
 .pnp.js
 
